@@ -1,0 +1,52 @@
+# ============================================
+# Pet Travel Agent - Docker忽略文件
+# ============================================
+
+# 版本控制
+.git
+.gitignore
+.github
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# 依赖目录（会重新安装）
+node_modules
+
+# 日志
+logs
+*.log
+npm-debug.log*
+
+# 上传的文件（运行时生成）
+uploads/*
+!uploads/.gitkeep
+
+# 环境变量（包含敏感信息）
+.env
+.env.local
+.env.*.local
+
+# 微信小程序相关（不需要在服务端）
+miniprogram_npm
+project.private.config.json
+
+# 文档
+*.md
+!README.md
+
+# 测试
+coverage
+.nyc_output
+
+# macOS
+.DS_Store
+Thumbs.db
+
+# 临时文件
+tmp
+temp
+.cache

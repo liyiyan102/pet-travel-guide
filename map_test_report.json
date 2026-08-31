@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-07-28T04:33:30.778Z",
+  "api_key_status": "real_api",
+  "summary": {
+    "total": 8,
+    "passed": 0,
+    "failed": 4,
+    "skipped": 4,
+    "passRate": "0.0"
+  },
+  "tests": [
+    {
+      "name": "POI搜索 - 杭州宠物友好餐厅",
+      "status": "failed",
+      "error": "未返回任何POI数据"
+    },
+    {
+      "name": "POI搜索 - 北京公园",
+      "status": "failed",
+      "error": "未返回公园数据"
+    },
+    {
+      "name": "POI搜索 - 上海宠物医院",
+      "status": "failed",
+      "error": "未返回医院数据"
+    },
+    {
+      "name": "地理编码 - 杭州西湖",
+      "status": "skipped",
+      "error": "此key每日调用量已达到上限"
+    },
+    {
+      "name": "地理编码 - 天安门广场",
+      "status": "skipped",
+      "error": "此key每日调用量已达到上限"
+    },
+    {
+      "name": "驾车路线规划 - 西湖到灵隐寺",
+      "status": "skipped",
+      "error": "此key每日调用量已达到上限"
+    },
+    {
+      "name": "步行路线规划 - 短距离",
+      "status": "skipped",
+      "error": "此key每日调用量已达到上限"
+    },
+    {
+      "name": "综合场景 - 搜索并规划路线",
+      "status": "failed",
+      "error": "需要至少2个POI来规划路线"
+    }
+  ]
+}

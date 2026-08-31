@@ -1,0 +1,95 @@
+<!-- 找地点 - 地图+列表 -->
+
+<!-- 地图区域 -->
+<view class="map-section">
+  <map
+    id="petMap"
+    latitude="{{latitude}}"
+    longitude="{{longitude}}"
+    scale="{{scale}}"
+    show-location
+    markers="{{markers}}"
+    bindmarkertap="onMarkerTap"
+    style="width:100%;height:100%;"
+  ></map>
+
+  <!-- 地图控制按钮 -->
+  <view class="map-controls">
+    <view class="map-btn" bindtap="locateMe">
+      <image src="/images/ic-location.png" mode="aspectFit" style="width:36rpx;height:36rpx;"/>
+    </view>
+    <view class="map-btn" bindtap="zoomIn">
+      <image src="/images/ic-plus.png" mode="aspectFit" style="width:36rpx;height:36rpx;"/>
+    </view>
+    <view class="map-btn" bindtap="zoomOut">
+      <image src="/images/ic-minus.png" mode="aspectFit" style="width:36rpx;height:36rpx;"/>
+    </view>
+  </view>
+</view>
+
+<!-- 筛选 Chip 横滑 -->
+<scroll-view class="filter-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+  <view class="filter-list">
+    <view
+      wx:for="{{filterTabs}}"
+      wx:key="id"
+      class="filter-chip {{currentFilter === item.id ? 'on' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="onFilterTap"
+    >
+      <image wx:if="{{item.icon}}" src="{{item.icon}}" mode="aspectFit" style="width:28rpx;height:28rpx;"/>
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+</scroll-view>
+
+<!-- POI 列表 -->
+<scroll-view class="poi-list-scroll" scroll-y enhanced show-scrollbar="{{false}}" style="height: calc(100vh - 600rpx - 100rpx);">
+
+  <view wx:if="{{loading}}" class="loading-state">加载中...</view>
+
+  <view wx:elif="{{poiList.length === 0}}" class="empty-state">
+    <text>暂无该类型宠物友好地点</text>
+    <text class="cap" style="margin-top:8rpx;">试试切换其他筛选条件</text>
+  </view>
+
+  <view wx:else>
+    <view
+      wx:for="{{poiList}}"
+      wx:key="id"
+      class="poi-row"
+      bindtap="onPOITap"
+      data-poi="{{item}}"
+    >
+      <view class="poi-row-icon" style="background:{{item.bgColor}};">
+        <image src="{{item.icon}}" mode="aspectFit" style="width:44rpx;height:44rpx;"/>
+      </view>
+      <view class="poi-row-body">
+        <!-- 主标题：POI名称 -->
+        <view class="poi-row-name">{{item.name}}</view>
+        <!-- 地址 -->
+        <view class="poi-row-addr" wx:if="{{item.address}}">{{item.address}}</view>
+        <!-- 信息行：距离、评分、人均价格、营业时间 -->
+        <view class="poi-row-info">
+          <text wx:if="{{item.distance}}" class="info-item">{{item.distance}}</text>
+          <text wx:if="{{item.rating}}" class="info-item">★{{item.rating}}</text>
+          <text wx:if="{{item.avg_price}}" class="info-item price">¥{{item.avg_price}}</text>
+          <text wx:if="{{item.opening_hours}}" class="info-item time">🕐 {{item.opening_hours}}</text>
+        </view>
+        <!-- 标签行：宠物友好等 -->
+        <view class="row-tags" style="margin-top:12rpx;" wx:if="{{item.pet_friendly || item.tel}}">
+          <text wx:if="{{item.pet_friendly}}" class="pill pill-g">宠物友好</text>
+          <text wx:if="{{item.tel}}" class="pill pill-b" catchtap="callPhone" data-tel="{{item.tel}}">📞 电话</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tab-safe"></view>
+</scroll-view>
+
+<!-- AI悬浮按钮 -->
+<view class="ai-fab" bindtap="goToChat">
+  <image src="/images/ic-ai.png" mode="aspectFit" class="ai-fab-icon"/>
+  <text class="ai-fab-text">AI</text>
+</view>

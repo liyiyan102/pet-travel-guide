@@ -1,0 +1,49 @@
+# 微信小程序
+.project.config.json
+miniprogram_npm/
+
+# 依赖
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 云函数
+cloudfunctions/**/node_modules/
+
+# 日志
+*.log
+npm-debug.log*
+
+# 临时文件
+*.tmp
+*.temp
+
+# 环境变量与密钥
+.env
+.env.*
+!.env.example
+
+# 上传与评测运行产物
+uploads/
+tests/eval/reports/*.log
+tests/eval/reports/eval_checkpoint_*.json
+tests/eval/reports/eval_summary_*_skip*.json
+tests/eval/reports/eval_run_*.log
+
+# 本地调试
+debug.html
+_test_*.js
+_debug_*.js
+_gen_golden_*.js
+_validate_golden.js
+test_tmp.js
+
+agent/data/memories/

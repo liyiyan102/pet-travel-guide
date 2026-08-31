@@ -1,0 +1,124 @@
+<!-- 我的页面 - 对齐带爪旅行视觉稿 -->
+<scroll-view class="profile-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+
+  <!-- 用户头像+信息 -->
+  <view class="profile-header">
+    <view class="avatar-row">
+      <view class="avatar-wrap" bindtap="onAvatarTap">
+        <view class="avatar-bg">
+          <image src="/images/ic-dog.png" mode="aspectFit" style="width:68rpx;height:68rpx;"/>
+        </view>
+      </view>
+      <view style="flex:1;">
+        <view class="h1" style="font-size:44rpx;">{{userInfo.nickName || '登录账号'}}</view>
+        <view class="sub" style="font-size:26rpx;margin-top:6rpx;">{{userInfo.city || '宠物出行达人'}} {{userInfo.nickName ? '· WagTrip' : ''}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="profile-content">
+
+    <!-- 统计数据 -->
+    <view class="stats-grid">
+      <view class="stat-card" style="background:#E8F8F0;" bindtap="goToMyTrips">
+        <view style="font-size:48rpx;font-weight:800;color:#00B86B;">{{stats.tripCount || 0}}</view>
+        <view class="cap" style="margin-top:4rpx;">我的攻略</view>
+      </view>
+      <view class="stat-card" style="background:#FFF3EA;">
+        <view style="font-size:48rpx;font-weight:800;color:#FF7A1A;">{{stats.favCount || 0}}</view>
+        <view class="cap" style="margin-top:4rpx;">收藏地点</view>
+      </view>
+      <view class="stat-card" style="background:#EFF6FF;">
+        <view style="font-size:48rpx;font-weight:800;color:#3B82F6;">{{stats.cityCount || 0}}</view>
+        <view class="cap" style="margin-top:4rpx;">足迹城市</view>
+      </view>
+    </view>
+
+    <!-- 我的攻略入口 -->
+    <view class="section-title">
+      <text class="h2">我的攻略</text>
+      <text class="more" bindtap="goToMyTrips">全部 ›</text>
+    </view>
+
+    <!-- 攻略卡片（最近2条） -->
+    <view wx:if="{{recentTrips.length > 0}}">
+      <view
+        wx:for="{{recentTrips}}"
+        wx:key="id"
+        class="trip-row"
+        bindtap="onTripTap"
+        data-trip="{{item}}"
+      >
+        <view class="trip-icon" style="background:{{item.bgColor}};">
+          <image src="{{item.icon}}" mode="aspectFit" style="width:44rpx;height:44rpx;"/>
+        </view>
+        <view style="flex:1;min-width:0;">
+          <view class="h3" style="margin-bottom:8rpx;">{{item.title}}</view>
+          <view class="cap">{{item.days}}天 · {{item.spotCount}}个地点 · {{item.updatedAt}}</view>
+        </view>
+        <text class="pill {{item.status === 'saved' ? 'pill-g' : 'pill-k'}}">{{item.status === 'saved' ? '已保存' : '草稿'}}</text>
+      </view>
+    </view>
+
+    <view wx:else class="empty-state" style="padding:48rpx 0;">
+      <text style="font-size:28rpx;color:#A8B0B8;">还没有攻略，快去生成一篇吧</text>
+    </view>
+
+    <!-- 工具菜单 -->
+    <view class="section-title">
+      <text class="h2">工具</text>
+    </view>
+
+    <view class="menu-card">
+      <view class="menu-row" bindtap="goToFavorites">
+        <view class="menu-row-left">
+          <view class="menu-icon-wrap" style="background:#FFF3EA;">
+            <image src="/images/ic-star.png" mode="aspectFit" style="width:36rpx;height:36rpx;"/>
+          </view>
+          <text>收藏地点</text>
+        </view>
+        <image src="/images/ic-arrow-right.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/>
+      </view>
+      <view class="divider" style="margin:0 48rpx;"></view>
+      <view class="menu-row" bindtap="goToFeedback">
+        <view class="menu-row-left">
+          <view class="menu-icon-wrap" style="background:#EFF6FF;">
+            <image src="/images/ic-mail.png" mode="aspectFit" style="width:36rpx;height:36rpx;"/>
+          </view>
+          <text>数据纠错</text>
+        </view>
+        <image src="/images/ic-arrow-right.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/>
+      </view>
+      <view class="divider" style="margin:0 48rpx;"></view>
+      <view class="menu-row" bindtap="goToSettings">
+        <view class="menu-row-left">
+          <view class="menu-icon-wrap" style="background:#F4F4F6;">
+            <image src="/images/ic-settings.png" mode="aspectFit" style="width:36rpx;height:36rpx;"/>
+          </view>
+          <text>设置</text>
+        </view>
+        <image src="/images/ic-arrow-right.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/>
+      </view>
+    </view>
+
+    <!-- 版本 -->
+    <view class="version-row">WagTrip v1.0.0</view>
+
+    <view class="tab-safe"></view>
+  </view>
+</scroll-view>
+
+<!-- 添加/编辑宠物弹窗（保留，复用原有逻辑） -->
+<view wx:if="{{showPetPopup}}" class="popup-mask" bindtap="closePetPopup">
+  <view class="popup-content" catchtap="">
+    <view class="popup-title">{{editingPetIndex >= 0 ? '编辑宠物' : '添加宠物'}}</view>
+    <view class="form-group">
+      <text class="form-label">昵称</text>
+      <input class="form-input" placeholder="给宠物起个名字" value="{{petForm.name}}" bindinput="onPetFormInput" data-field="name"/>
+    </view>
+    <view class="popup-actions">
+      <button class="btn-cancel" bindtap="closePetPopup">取消</button>
+      <button class="btn-confirm" bindtap="savePet">保存</button>
+    </view>
+  </view>
+</view>

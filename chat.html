@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐾 小D - 宠物出行助手</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', sans-serif;
+      background: #f0f4f0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 顶部 */
+    .header {
+      background: linear-gradient(135deg, #27AE60, #1a8a46);
+      color: white;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    .header-avatar {
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .header-info h2 { font-size: 16px; font-weight: 600; }
+    .header-info p { font-size: 12px; opacity: 0.8; margin-top: 1px; }
+    .header-status {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; opacity: 0.9;
+    }
+    .status-dot {
+      width: 8px; height: 8px;
+      background: #7DEFA1;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* 消息区 */
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .messages::-webkit-scrollbar { width: 4px; }
+    .messages::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+
+    /* 消息气泡 */
+    .msg { display: flex; gap: 10px; max-width: 85%; }
+    .msg.user { align-self: flex-end; flex-direction: row-reverse; }
+    .msg.bot { align-self: flex-start; }
+
+    .msg-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .msg.bot .msg-avatar { background: #e8f5e9; }
+    .msg.user .msg-avatar { background: #c8e6c9; }
+
+    .msg-bubble {
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .msg.bot .msg-bubble {
+      background: white;
+      color: #333;
+      border-top-left-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .msg.user .msg-bubble {
+      background: #27AE60;
+      color: white;
+      border-top-right-radius: 4px;
+    }
+
+    /* 快捷按钮 */
+    .quick-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 16px 8px;
+    }
+    .quick-btn {
+      padding: 7px 14px;
+      background: white;
+      border: 1px solid #27AE60;
+      border-radius: 16px;
+      color: #27AE60;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .quick-btn:hover { background: #27AE60; color: white; }
+
+    /* 输入区 */
+    .input-area {
+      background: white;
+      padding: 12px 16px;
+      border-top: 1px solid #e8e8e8;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .input-box {
+      flex: 1;
+      border: 1px solid #ddd;
+      border-radius: 22px;
+      padding: 10px 16px;
+      font-size: 14px;
+      outline: none;
+      resize: none;
+      min-height: 42px;
+      max-height: 120px;
+      line-height: 1.5;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .input-box:focus { border-color: #27AE60; }
+    .send-btn {
+      width: 42px; height: 42px;
+      background: #27AE60;
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .send-btn:hover { background: #1e8a46; transform: scale(1.05); }
+    .send-btn:disabled { background: #aaa; cursor: not-allowed; transform: none; }
+
+    /* 加载动画 */
+    .typing {
+      display: flex;
+      gap: 4px;
+      padding: 12px 14px;
+      background: white;
+      border-radius: 18px;
+      border-top-left-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      width: fit-content;
+    }
+    .typing span {
+      width: 8px; height: 8px;
+      background: #27AE60;
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+    .typing span:nth-child(2) { animation-delay: 0.2s; }
+    .typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+      40% { transform: translateY(-8px); opacity: 1; }
+    }
+
+    /* 时间戳 */
+    .msg-time {
+      font-size: 11px;
+      color: #aaa;
+      text-align: center;
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-avatar">🐾</div>
+  <div class="header-info">
+    <h2>小D · 宠物出行助手</h2>
+    <p>为你的毛孩子规划最棒的旅程</p>
+  </div>
+  <div class="header-status">
+    <div class="status-dot"></div>
+    在线
+  </div>
+</div>
+
+<div class="messages" id="messages"></div>
+
+<div class="quick-btns" id="quickBtns">
+  <button class="quick-btn" onclick="sendQuick('北京有什么宠物友好餐厅')">🍽️ 北京宠物餐厅</button>
+  <button class="quick-btn" onclick="sendQuick('上海有什么宠物友好公园')">🌳 上海宠物公园</button>
+  <button class="quick-btn" onclick="sendQuick('带法斗坐飞机需要注意什么')">✈️ 带宠坐飞机</button>
+  <button class="quick-btn" onclick="sendQuick('帮我规划杭州3天带狗旅行')">🗺️ 规划行程</button>
+  <button class="quick-btn" onclick="sendQuick('狗狗能吃葡萄吗')">🍇 宠物饮食安全</button>
+  <button class="quick-btn" onclick="sendQuick('北京养大型犬有什么规定')">📋 养犬法规</button>
+</div>
+
+<div class="input-area">
+  <textarea class="input-box" id="inputBox" placeholder="问我任何宠物出行问题…" rows="1"></textarea>
+  <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+</div>
+
+<script>
+  const API = '/api/chat'
+  const SESSION_ID = 'chat_' + Date.now()
+  let isLoading = false
+
+  // 初始化欢迎消息
+  window.onload = () => {
+    addMsg('bot', '🐾 你好呀！我是小D，你的专属宠物出行AI助手！\n\n我可以帮你：\n🔍 找宠物友好餐厅、公园、酒店\n🗺️ 规划带宠物的旅行攻略\n📋 解答养宠法规问题\n✈️ 高铁/飞机携宠指南\n🔬 判断宠物食物安全性\n📊 评估品种出行风险\n🌤️ 查询目的地天气\n\n点击下方快捷按钮，或直接输入你的问题吧～')
+    addTime()
+  }
+
+  // 自动调整输入框高度
+  const inputBox = document.getElementById('inputBox')
+  inputBox.addEventListener('input', () => {
+    inputBox.style.height = 'auto'
+    inputBox.style.height = Math.min(inputBox.scrollHeight, 120) + 'px'
+  })
+  inputBox.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      sendMessage()
+    }
+  })
+
+  function sendQuick(text) {
+    inputBox.value = text
+    sendMessage()
+  }
+
+  async function sendMessage() {
+    const text = inputBox.value.trim()
+    if (!text || isLoading) return
+
+    inputBox.value = ''
+    inputBox.style.height = 'auto'
+    isLoading = true
+    document.getElementById('sendBtn').disabled = true
+
+    // 隐藏快捷按钮
+    document.getElementById('quickBtns').style.display = 'none'
+
+    addMsg('user', text)
+    const typingEl = addTyping()
+    scrollToBottom()
+
+    try {
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, userId: 'web_user', sessionId: SESSION_ID })
+      })
+      const data = await res.json()
+      typingEl.remove()
+
+      if (data.success && data.response?.content) {
+        addMsg('bot', data.response.content)
+      } else {
+        addMsg('bot', '😅 抱歉，出了一点小问题，请稍后再试～')
+      }
+    } catch (e) {
+      typingEl.remove()
+      addMsg('bot', '⚠️ 网络连接失败，请检查服务是否启动')
+    }
+
+    addTime()
+    isLoading = false
+    document.getElementById('sendBtn').disabled = false
+    scrollToBottom()
+  }
+
+  function addMsg(role, text) {
+    const msgs = document.getElementById('messages')
+    const div = document.createElement('div')
+    div.className = `msg ${role}`
+    div.innerHTML = `
+      <div class="msg-avatar">${role === 'bot' ? '🐾' : '👤'}</div>
+      <div class="msg-bubble">${escapeHtml(text)}</div>
+    `
+    msgs.appendChild(div)
+    return div
+  }
+
+  function addTyping() {
+    const msgs = document.getElementById('messages')
+    const div = document.createElement('div')
+    div.className = 'msg bot'
+    div.innerHTML = `
+      <div class="msg-avatar">🐾</div>
+      <div class="typing"><span></span><span></span><span></span></div>
+    `
+    msgs.appendChild(div)
+    scrollToBottom()
+    return div
+  }
+
+  function addTime() {
+    const msgs = document.getElementById('messages')
+    const div = document.createElement('div')
+    div.className = 'msg-time'
+    div.textContent = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+    msgs.appendChild(div)
+  }
+
+  function scrollToBottom() {
+    const msgs = document.getElementById('messages')
+    msgs.scrollTop = msgs.scrollHeight
+  }
+
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\n/g, '<br>')
+  }
+</script>
+</body>
+</html>

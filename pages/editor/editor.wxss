@@ -1,0 +1,598 @@
+/* pages/editor/editor.wxss */
+.container {
+  padding: 0;
+  background: #F7F7F8;
+  min-height: 100vh;
+}
+
+/* 头部导航 */
+.editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 88rpx;
+  padding: 0 32rpx;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* 预览模式浮动返回 */
+.float-back {
+  position: absolute;
+  left: 24rpx;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.12);
+  z-index: 200;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  min-width: 120rpx;
+}
+
+.header-right { justify-content: flex-end; }
+
+.header-left text {
+  font-size: 28rpx;
+  color: #6E7681;
+  margin-left: 8rpx;
+}
+
+.header-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1A1D1F;
+}
+
+.save-btn {
+  font-size: 28rpx;
+  color: #A8B0B8;
+  font-weight: 500;
+}
+
+.save-btn.highlight {
+  color: #00B86B;
+}
+
+/* 攻略标题卡片 */
+.trip-title-card {
+  padding: 32rpx 32rpx 24rpx;
+  background: #fff;
+}
+
+.trip-title {
+  font-size: 40rpx;
+  font-weight: 800;
+  color: #1A1D1F;
+  letter-spacing: -0.8rpx;
+}
+
+.trip-meta {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-top: 12rpx;
+}
+
+.meta-item {
+  font-size: 24rpx;
+  color: #A8B0B8;
+}
+
+.meta-dot {
+  font-size: 24rpx;
+  color: #A8B0B8;
+}
+
+/* 地图区域 */
+.map-section {
+  position: relative;
+  width: 100%;
+  height: 480rpx;
+  background: #E8F8F0;
+}
+
+.map-section.map-fulltop {
+  height: 560rpx;
+}
+
+.trip-map {
+  width: 100%;
+  height: 100%;
+}
+
+.map-overlay {
+  position: absolute;
+  left: 32rpx;
+  bottom: 32rpx;
+  right: 32rpx;
+  background: rgba(255,255,255,0.95);
+  border-radius: 24rpx;
+  padding: 20rpx 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+}
+
+.overlay-day {
+  font-size: 24rpx;
+  color: #00B86B;
+  font-weight: 700;
+}
+
+.overlay-theme {
+  font-size: 32rpx;
+  color: #1A1D1F;
+  font-weight: 700;
+  margin-top: 4rpx;
+}
+
+.overlay-meta {
+  font-size: 22rpx;
+  color: #A8B0B8;
+  margin-top: 6rpx;
+}
+
+/* 天数选择器 */
+.day-tabs {
+  background: #fff;
+  border-bottom: 2rpx solid #F0F0F2;
+}
+
+.day-tabs-inner {
+  display: flex;
+  padding: 24rpx 32rpx;
+  gap: 16rpx;
+  width: max-content;
+}
+
+.day-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 32rpx;
+  border-radius: 24rpx;
+  background: #F7F7F8;
+  min-width: 140rpx;
+  flex-shrink: 0;
+}
+
+.day-tab.active {
+  background: #1A1D1F;
+}
+
+.day-tab-num {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #6E7681;
+}
+
+.day-tab.active .day-tab-num {
+  color: #00B86B;
+}
+
+.day-tab-theme {
+  font-size: 22rpx;
+  color: #A8B0B8;
+  margin-top: 4rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200rpx;
+}
+
+.day-tab.active .day-tab-theme {
+  color: rgba(255,255,255,0.7);
+}
+
+.day-tab.add-day {
+  justify-content: center;
+  background: #E8F8F0;
+}
+
+.add-day-text {
+  font-size: 26rpx;
+  color: #00B86B;
+  font-weight: 600;
+}
+
+/* 地点时间线 */
+.spots-timeline {
+  padding: 32rpx;
+}
+
+.spot-item {
+  display: flex;
+  gap: 24rpx;
+  margin-bottom: 8rpx;
+}
+
+/* 时间线左侧 */
+.timeline-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.timeline-dot {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #fff;
+  background: #00B86B;
+  flex-shrink: 0;
+}
+
+.timeline-dot.unfriendly {
+  background: #FF7A1A;
+}
+
+.timeline-line {
+  width: 4rpx;
+  flex: 1;
+  min-height: 40rpx;
+  background: #E8E8EA;
+  margin: 8rpx 0;
+}
+
+/* 地点卡片 */
+.spot-card-inner {
+  flex: 1;
+  background: #fff;
+  border-radius: 32rpx;
+  border: 2rpx solid #F0F0F2;
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+}
+
+.spot-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.spot-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1A1D1F;
+  flex: 1;
+}
+
+.spot-pet-badge {
+  padding: 6rpx 16rpx;
+  border-radius: 100rpx;
+  font-size: 20rpx;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.spot-pet-badge.ok {
+  background: #E8F8F0;
+  color: #00B86B;
+}
+
+.spot-pet-badge.no {
+  background: #FFF3EA;
+  color: #FF7A1A;
+}
+
+/* 地点信息 */
+.spot-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.info-chip {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 8rpx 16rpx;
+  background: #F7F7F8;
+  border-radius: 100rpx;
+  font-size: 22rpx;
+  color: #6E7681;
+}
+
+/* 备注 */
+.spot-note-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8rpx;
+  margin-top: 16rpx;
+  padding: 16rpx 20rpx;
+  background: #F7F7F8;
+  border-radius: 20rpx;
+}
+
+.spot-note-text {
+  font-size: 24rpx;
+  color: #6E7681;
+  line-height: 1.5;
+}
+
+/* 编辑操作 */
+.spot-ops {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 2rpx solid #F0F0F2;
+}
+
+.op-btn {
+  font-size: 24rpx;
+  color: #6E7681;
+  padding: 8rpx 20rpx;
+  background: #F7F7F8;
+  border-radius: 100rpx;
+}
+
+.op-btn.del {
+  color: #FF4D4F;
+  background: #FFF2F0;
+}
+
+/* 空状态 */
+.empty-spots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 0;
+  color: #A8B0B8;
+  font-size: 28rpx;
+}
+
+/* 添加地点按钮 */
+.add-spot-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  margin: 0 32rpx 32rpx;
+  padding: 32rpx;
+  border: 2rpx dashed #C8CDD2;
+  border-radius: 32rpx;
+  color: #00B86B;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+/* 预览模式操作按钮 */
+.preview-actions {
+  display: flex;
+  gap: 20rpx;
+  padding: 0 32rpx 32rpx;
+}
+
+.preview-actions button {
+  flex: 1;
+}
+
+/* 纯文本内容展示（Agent 生成） */
+.text-content-card {
+  margin: 24rpx 32rpx;
+  padding: 36rpx;
+  background: #fff;
+  border-radius: 28rpx;
+  border: 2rpx solid #F0F0F2;
+}
+
+.text-content {
+  font-size: 30rpx;
+  color: #3D4145;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* 地点卡片第二行：附属备注 */
+.spot-sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.spot-note-inline {
+  font-size: 24rpx;
+  color: #888;
+  line-height: 1.4;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* 拖拽模式提示行 */
+.drag-hint-row {
+  margin-top: 16rpx;
+  padding: 10rpx 20rpx;
+  background: #E8F5EE;
+  border-radius: 16rpx;
+  display: inline-flex;
+  align-items: center;
+}
+
+.drag-hint-row text {
+  font-size: 22rpx;
+  color: #00B86B;
+}
+
+/* 拖拽排序 */
+.drag-handle {
+  position: absolute;
+  left: 8rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.drag-icon {
+  font-size: 32rpx;
+  color: #B0B0B8;
+}
+
+.spot-item.dragging {
+  opacity: 0.9;
+  box-shadow: 0 8rpx 32rpx rgba(0, 184, 107, 0.2);
+  z-index: 100;
+  transform: scale(1.02);
+}
+
+.spot-item.swiping {
+  transition: none;
+}
+
+/* 左滑删除按钮 */
+.swipe-delete-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 160rpx;
+  background: #FF4D4F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 24rpx 24rpx 0;
+}
+
+.swipe-delete-btn text {
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.op-btn.drag-hint {
+  background: #E8F5EE;
+  color: #00B86B;
+  font-size: 22rpx;
+}
+
+.tab-safe { height: 60rpx; }
+
+/* 弹窗 */
+.popup-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+}
+
+.popup-content {
+  background: #fff;
+  border-radius: 40rpx 40rpx 0 0;
+  padding: 48rpx;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.popup-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1A1D1F;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.form-group {
+  margin-bottom: 28rpx;
+}
+
+.form-group .form-label {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #6E7681;
+  margin-bottom: 12rpx;
+}
+
+.form-input {
+  width: 100%;
+  height: 88rpx;
+  background: #F7F7F8;
+  border: none;
+  border-radius: 24rpx;
+  padding: 0 28rpx;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+.picker-value {
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #F7F7F8;
+  border-radius: 24rpx;
+  padding: 0 28rpx;
+  font-size: 30rpx;
+  color: #1A1D1F;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 140rpx;
+  background: #F7F7F8;
+  border: none;
+  border-radius: 24rpx;
+  padding: 20rpx 28rpx;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 40rpx;
+}
+
+.btn-cancel, .btn-confirm {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 28rpx;
+  font-size: 30rpx;
+  text-align: center;
+  margin: 0;
+  border: none;
+}
+
+.btn-cancel {
+  background: #F7F7F8;
+  color: #6E7681;
+}
+
+.btn-confirm {
+  background: #00B86B;
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn-cancel::after, .btn-confirm::after { border: none; }

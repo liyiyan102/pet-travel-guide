@@ -1,0 +1,144 @@
+/* 找地点页样式 */
+
+/* 状态栏间距 */
+.status-bar-spacer {
+  background: #E8F8F0;
+}
+
+/* 地图上半屏 */
+.map-section {
+  width: 100%;
+  height: 600rpx;
+  position: relative;
+  background: #E8F8F0;
+}
+
+/* 地图控制按钮 */
+.map-controls {
+  position: absolute;
+  right: 32rpx;
+  bottom: 40rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.map-btn {
+  width: 80rpx;
+  height: 80rpx;
+  background: #fff;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.06);
+  color: #1A1D1F;
+}
+
+/* 筛选 chip 横滑 */
+.filter-scroll {
+  background: #fff;
+  border-bottom: 2rpx solid #F0F0F2;
+}
+
+.filter-list {
+  display: flex;
+  padding: 24rpx 32rpx;
+  gap: 16rpx;
+  width: max-content;
+}
+
+.filter-chip {
+  white-space: nowrap;
+  padding: 16rpx 32rpx;
+  border-radius: 100rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  background: #fff;
+  color: #6E7681;
+  border: 2rpx solid #F0F0F2;
+  display: flex;
+  align-items: center;
+}
+
+.filter-chip.on {
+  background: #1A1D1F;
+  color: #fff;
+  border-color: #1A1D1F;
+}
+
+/* POI 列表 */
+.poi-list-scroll {
+  background: #F7F7F8;
+  height: calc(100vh - 600rpx - 120rpx);
+  padding: 16rpx 0;
+}
+
+.poi-row {
+  display: flex;
+  gap: 24rpx;
+  padding: 24rpx 48rpx;
+  background: #fff;
+  margin: 0 32rpx 24rpx;
+  border-radius: 40rpx;
+  border: 2rpx solid #F0F0F2;
+  align-items: center;
+}
+
+.poi-row-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.poi-row-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.poi-row-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1A1D1F;
+  margin-bottom: 6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.poi-row-addr {
+  font-size: 24rpx;
+  color: #888;
+  margin-bottom: 6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 信息行：距离、评分、人均价格、营业时间 */
+.poi-row-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 4rpx;
+}
+
+.info-item {
+  font-size: 22rpx;
+  color: #888;
+}
+
+.info-item.price {
+  color: #FF7A1A;
+  font-weight: 500;
+}
+
+.info-item.time {
+  color: #00B86B;
+}

@@ -1,0 +1,272 @@
+/* pages/poidetail/poidetail.wxss */
+.container {
+  position: relative;
+  min-height: 100vh;
+  background: #F7F7F8;
+}
+
+.loading-state {
+  text-align: center;
+  color: #6E7681;
+  font-size: 28rpx;
+}
+
+/* ========== 深色 Hero ========== */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 360rpx;
+  background: #0A0A0C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600rpx;
+  height: 600rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,184,107,0.4) 0%, transparent 70%);
+  top: -200rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: blur(40rpx);
+}
+
+.hero-icon {
+  position: relative;
+  z-index: 2;
+  width: 160rpx;
+  height: 160rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40rpx;
+  background: rgba(255,255,255,0.06);
+  border: 2rpx solid rgba(255,255,255,0.1);
+}
+
+/* 浮动返回按钮 */
+.float-back {
+  position: fixed;
+  left: 24rpx;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.12);
+  z-index: 200;
+}
+
+/* ========== 内容卡 ========== */
+.content-card {
+  margin: -48rpx 24rpx 24rpx;
+  background: #fff;
+  border-radius: 40rpx 40rpx 32rpx 32rpx;
+  padding: 40rpx 32rpx;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.06);
+}
+
+/* 标题行 */
+.title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.title-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.poi-name {
+  font-size: 44rpx;
+  font-weight: 800;
+  color: #1A1D1F;
+  letter-spacing: -1rpx;
+  line-height: 1.2;
+  display: block;
+}
+
+.poi-addr {
+  font-size: 24rpx;
+  color: #6E7681;
+  margin-top: 12rpx;
+  display: block;
+}
+
+.friendly-badge {
+  flex-shrink: 0;
+  padding: 10rpx 24rpx;
+  background: #E8F8F0;
+  border-radius: 100rpx;
+}
+
+.friendly-badge text {
+  font-size: 22rpx;
+  font-weight: 700;
+  color: #00B86B;
+}
+
+/* 元信息行 */
+.meta-row {
+  display: flex;
+  gap: 32rpx;
+  margin-top: 28rpx;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 24rpx;
+  color: #1A1D1F;
+  font-weight: 500;
+}
+
+.meta-ico {
+  font-size: 26rpx;
+}
+
+.divider {
+  height: 2rpx;
+  background: #F0F0F2;
+  margin: 32rpx 0;
+}
+
+/* Section */
+.section {
+  margin-bottom: 32rpx;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #1A1D1F;
+}
+
+.sec-ico {
+  font-size: 32rpx;
+}
+
+.section-sub {
+  font-size: 22rpx;
+  color: #6E7681;
+  margin-top: 8rpx;
+  margin-left: 44rpx;
+}
+
+/* 信息卡 */
+.info-card {
+  background: #F0FAF5;
+  border-radius: 28rpx;
+  padding: 8rpx 32rpx;
+  margin-top: 16rpx;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom: 2rpx solid rgba(0,184,107,0.08);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 26rpx;
+  color: #6E7681;
+}
+
+.info-value {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1A1D1F;
+}
+
+/* 地址 */
+.address-text {
+  font-size: 26rpx;
+  color: #1A1D1F;
+  line-height: 1.6;
+  margin-top: 16rpx;
+  padding: 20rpx 24rpx;
+  background: #F7F7F8;
+  border-radius: 20rpx;
+}
+
+.bottom-spacer {
+  height: 180rpx;
+}
+
+/* ========== 底部操作栏 ========== */
+.action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx 32rpx;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(30rpx);
+  border-top: 2rpx solid #F0F0F2;
+  z-index: 100;
+}
+
+.action-icons {
+  display: flex;
+  gap: 16rpx;
+}
+
+.action-icon-btn {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 28rpx;
+  background: #F7F7F8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid #F0F0F2;
+}
+
+.add-btn {
+  flex: 1;
+  height: 80rpx;
+  background: #1A1D1F;
+  color: #fff;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  border: none;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.add-btn::after { border: none; }
+
+.add-plus {
+  font-size: 36rpx;
+  font-weight: 600;
+  line-height: 1;
+}

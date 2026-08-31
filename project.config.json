@@ -1,0 +1,39 @@
+{
+  "setting": {
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "uglifyFileName": false,
+    "enhance": true,
+    "packNpmRelationList": [],
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useCompilerPlugins": false,
+    "minifyWXML": true,
+    "urlCheck": false
+  },
+  "compileType": "miniprogram",
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [
+      { "type": "folder", "value": "agent" },
+      { "type": "folder", "value": "data" },
+      { "type": "folder", "value": "node_modules" },
+      { "type": "folder", "value": "icons" },
+      { "type": "file", "value": "server.js" },
+      { "type": "file", "value": "package.json" },
+      { "type": "file", "value": "package-lock.json" },
+      { "type": "file", "value": "convert_icons.js" },
+      { "type": "file", "value": "宠物出行法律法规知识库.json" },
+      { "type": "file", "value": "全国宠物友好POI库.csv" },
+      { "type": "file", "value": "chat.html" },
+      { "type": "file", "value": "map.html" }
+    ],
+    "include": []
+  },
+  "appid": "wx4964783a80b3f5f2",
+  "editorSetting": {}
+}

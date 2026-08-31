@@ -1,0 +1,125 @@
+<!-- 首页 - 带爪旅行 -->
+<scroll-view class="home-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+
+  <!-- 标题区 -->
+  <view class="home-header">
+    <image class="hero-banner" src="/images/daitto-banner.jpg" mode="widthFix"/>
+  </view>
+
+  <view class="home-content">
+
+    <!-- 搜索框 -->
+    <view class="search-bar-card" bindtap="goToSearch">
+      <image class="icon-svg" src="/images/ic-search.png" mode="aspectFit"/>
+      <text class="search-placeholder">搜索宠物友好地点</text>
+    </view>
+
+    <!-- AI攻略Banner -->
+    <view class="banner-dark" style="margin-top:40rpx;" bindtap="goToGenerate">
+      <view class="glow"></view>
+      <view class="banner-title">AI 智能攻略</view>
+      <view class="banner-sub">输入目的地和天数{{'\n'}}30秒生成专属携宠路线</view>
+      <view class="banner-cta">
+        <image src="/images/ic-ai.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/>
+        <text>立即生成</text>
+      </view>
+    </view>
+
+    <!-- 分类金刚区 -->
+    <view class="cat-grid" style="margin-top:56rpx;">
+      <view class="cat-item" bindtap="onCategoryTap" data-category="restaurant">
+        <view class="cat-icon" style="background:#FFF3EA;">
+          <image src="/images/ic-restaurant.png" mode="aspectFit" style="width:48rpx;height:48rpx;"/>
+        </view>
+        <text class="cat-name">美食</text>
+      </view>
+      <view class="cat-item" bindtap="onCategoryTap" data-category="scenic">
+        <view class="cat-icon" style="background:#E8F8F0;">
+          <image src="/images/ic-park.png" mode="aspectFit" style="width:48rpx;height:48rpx;"/>
+        </view>
+        <text class="cat-name">景区</text>
+      </view>
+      <view class="cat-item" bindtap="onCategoryTap" data-category="hotel">
+        <view class="cat-icon" style="background:#EFF6FF;">
+          <image src="/images/ic-hotel.png" mode="aspectFit" style="width:48rpx;height:48rpx;"/>
+        </view>
+        <text class="cat-name">酒店</text>
+      </view>
+      <view class="cat-item" bindtap="onCategoryTap" data-category="hospital">
+        <view class="cat-icon" style="background:#FDF2F8;">
+          <image src="/images/ic-hospital.png" mode="aspectFit" style="width:48rpx;height:48rpx;"/>
+        </view>
+        <text class="cat-name">医院</text>
+      </view>
+    </view>
+
+    <!-- 热门城市攻略 -->
+    <view class="section-title">
+      <text class="h2">热门城市</text>
+      <text class="more" bindtap="goToCityList">全部 ›</text>
+    </view>
+
+    <scroll-view class="city-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="city-list">
+        <view
+          wx:for="{{hotCities}}"
+          wx:key="name"
+          class="city-card"
+          style="background:{{item.bgColor}};"
+          bindtap="onCityTap"
+          data-city="{{item.name}}"
+        >
+          <view class="city-overlay"></view>
+          <view class="city-paw">
+            <image src="/images/ic-paw.png" mode="aspectFit" style="width:48rpx;height:48rpx;opacity:0.9;"/>
+          </view>
+          <view class="city-info">
+            <view class="city-name">{{item.name}}</view>
+            <view class="city-stat">{{item.poiCount}}个地点 · {{item.guideCount}}篇攻略</view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 热门攻略推荐 -->
+    <view class="section-title">
+      <text class="h2">热门攻略</text>
+      <text class="more" bindtap="goToGuideList">更多 ›</text>
+    </view>
+
+    <view wx:if="{{hotGuides.length > 0}}">
+      <view
+        wx:for="{{hotGuides}}"
+        wx:key="id"
+        class="row-card"
+        bindtap="onGuideTap"
+        data-guide="{{item}}"
+      >
+        <view class="row-icon" style="background:{{item.bgColor}};">
+          <image src="{{item.icon}}" mode="aspectFit" style="width:56rpx;height:56rpx;"/>
+        </view>
+        <view class="row-body">
+          <view class="name">{{item.title}}</view>
+          <view class="addr">{{item.days}}天 · {{item.spotCount}}个地点 · {{item.favCount}}收藏</view>
+          <view class="row-tags">
+            <text class="pill pill-g">{{item.tag1}}</text>
+            <text class="pill pill-k" wx:if="{{item.tag2}}">{{item.tag2}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-state">
+      <text>暂无攻略，快去生成一篇吧~</text>
+    </view>
+
+    <view class="tab-safe"></view>
+
+  </view>
+</scroll-view>
+
+<!-- AI悬浮按钮 -->
+<view class="ai-fab" bindtap="goToChat">
+  <image src="/images/ic-ai.png" mode="aspectFit" class="ai-fab-icon"/>
+  <text class="ai-fab-text">AI</text>
+</view>

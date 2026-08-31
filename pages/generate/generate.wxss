@@ -1,0 +1,225 @@
+/* 攻略定制页样式 - 对齐带爪旅行视觉稿 */
+
+.gen-scroll { height: 100vh; background: #F7F7F8; }
+
+.gen-content { padding: 0 48rpx; }
+
+.gen-header {
+  padding: 100rpx 0 48rpx;
+}
+
+/* 表单卡片 */
+.form-card {
+  background: #fff;
+  border-radius: 40rpx;
+  border: 2rpx solid #F0F0F2;
+  padding: 40rpx;
+  margin-bottom: 24rpx;
+}
+
+.form-card-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40rpx;
+}
+
+/* 表单组 */
+.fg {
+  margin-bottom: 36rpx;
+}
+
+.fl {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #6E7681;
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+/* 输入框通用 */
+.fi {
+  width: 100%;
+  background: #F7F7F8;
+  border: none;
+  border-radius: 32rpx;
+  padding: 32rpx 36rpx;
+  font-size: 30rpx;
+  color: #1A1D1F;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* 两列网格 */
+.g2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+  margin-bottom: 36rpx;
+}
+
+/* 选择组 */
+.cg {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+/* 选择项 */
+.sc {
+  padding: 24rpx 36rpx;
+  border-radius: 28rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  background: #F7F7F8;
+  color: #6E7681;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  border: 2rpx solid transparent;
+}
+
+.sc.on {
+  background: #E8F8F0;
+  color: #00B86B;
+  border-color: #00B86B;
+}
+
+/* 数量控制 */
+.num-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.num-btn {
+  width: 56rpx;
+  height: 56rpx;
+  background: #F0F0F2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  color: #1A1D1F;
+}
+
+/* 进度卡片 */
+.progress-card {
+  background: #fff;
+  border-radius: 40rpx;
+  padding: 48rpx;
+  margin-bottom: 24rpx;
+  border: 2rpx solid #F0F0F2;
+}
+
+.progress-steps {
+  margin-top: 32rpx;
+}
+
+.progress-step {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 16rpx 0;
+  font-size: 28rpx;
+  color: #A8B0B8;
+}
+
+.progress-step.completed { color: #00B86B; }
+.progress-step.current   { color: #1A1D1F; font-weight: 600; }
+
+.step-dot { font-size: 24rpx; }
+
+/* 结果卡片 */
+.result-card {
+  background: #fff;
+  border-radius: 40rpx;
+  padding: 48rpx;
+  margin-bottom: 24rpx;
+  border: 2rpx solid #F0F0F2;
+}
+
+.result-header {
+  margin-bottom: 32rpx;
+}
+
+.agent-content {
+  white-space: pre-wrap;
+  font-size: 28rpx;
+  line-height: 1.8;
+  color: #333;
+  padding: 32rpx;
+  background: #F7F7F8;
+  border-radius: 24rpx;
+  margin-bottom: 24rpx;
+}
+
+.days-preview .day-row {
+  margin-bottom: 20rpx;
+}
+
+.day-label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1A1D1F;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.spot-tags { display: flex; flex-wrap: wrap; gap: 12rpx; }
+
+.result-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  padding: 16rpx 0;
+}
+
+.suggestion-btn {
+  padding: 20rpx 32rpx;
+  background: #E8F8F0;
+  border: 2rpx solid #00B86B;
+  border-radius: 100rpx;
+  color: #00B86B;
+  font-size: 26rpx;
+}
+
+.result-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 32rpx;
+}
+
+.result-actions button { flex: 1; }
+
+/* 生成按钮（流式布局） */
+.gen-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  margin-bottom: 24rpx;
+}
+.gen-btn::after { border: none; }
+
+/* 取消生成按钮 */
+.cancel-btn {
+  text-align: center;
+  font-size: 26rpx;
+  color: #FA5151;
+  padding: 20rpx;
+  margin-top: 16rpx;
+  border: 2rpx solid #FFD0D0;
+  border-radius: 80rpx;
+  background: #FFF5F5;
+}
+
+.btn-disabled {
+  opacity: 0.5;
+}

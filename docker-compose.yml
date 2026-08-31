@@ -1,0 +1,70 @@
+# ============================================
+# Pet Travel Agent - Docker Compose 编排
+# 适用于阿里云 ECS / 本地开发
+# ============================================
+
+version: '3.8'
+
+services:
+  # ==================== Agent服务 ====================
+  pet-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pet-travel-agent
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - ZHIPU_API_KEY=${ZHIPU_API_KEY}
+      - UPLOAD_DIR=/app/uploads
+    volumes:
+      # 持久化上传的图片
+      - ./uploads:/app/uploads
+      # 日志目录（可选）
+      - ./logs:/app/logs
+    networks:
+      - pet-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+  # ==================== Nginx反向代理（可选）====================
+  nginx:
+    image: nginx:alpine
+    container_name: pet-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - ./uploads:/var/www/uploads:ro
+    depends_on:
+      - pet-agent
+    networks:
+      - pet-network
+    profiles:
+      - with-nginx
+
+networks:
+  pet-network:
+    driver: bridge
+
+volumes:
+  uploads:
+    driver: local

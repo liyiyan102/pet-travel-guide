@@ -1,0 +1,185 @@
+/* 我的页面样式 - 对齐带爪旅行视觉稿 */
+
+.profile-scroll { height: 100vh; background: #F7F7F8; }
+
+/* 头部 */
+.profile-header {
+  padding: 100rpx 48rpx 48rpx;
+  background: #F7F7F8;
+}
+
+.avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 36rpx;
+}
+
+.avatar-wrap {}
+
+.avatar-bg {
+  width: 136rpx;
+  height: 136rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF7A1A, #EC4899);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 内容区 */
+.profile-content { padding: 0 48rpx; }
+
+/* 统计卡片 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24rpx;
+  margin-bottom: 16rpx;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 36rpx 16rpx;
+  border-radius: 32rpx;
+}
+
+/* 攻略行 */
+.trip-row {
+  display: flex;
+  align-items: center;
+  gap: 28rpx;
+  padding: 28rpx;
+  background: #fff;
+  border-radius: 40rpx;
+  border: 2rpx solid #F0F0F2;
+  margin-bottom: 24rpx;
+}
+
+.trip-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 工具菜单 */
+.menu-card {
+  background: #fff;
+  border-radius: 40rpx;
+  border: 2rpx solid #F0F0F2;
+  overflow: hidden;
+  margin-bottom: 24rpx;
+}
+
+.menu-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36rpx 48rpx;
+}
+
+.menu-row-left {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #1A1D1F;
+}
+
+.menu-icon-wrap {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.menu-arrow {
+  font-size: 36rpx;
+  color: #A8B0B8;
+}
+
+/* 版本 */
+.version-row {
+  text-align: center;
+  font-size: 24rpx;
+  color: #A8B0B8;
+  padding: 32rpx 0;
+}
+
+/* 弹窗 */
+.popup-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+}
+
+.popup-content {
+  background: #fff;
+  border-radius: 48rpx 48rpx 0 0;
+  padding: 48rpx;
+  width: 100%;
+}
+
+.popup-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  margin-bottom: 48rpx;
+}
+
+.form-group { margin-bottom: 32rpx; }
+
+.form-label {
+  font-size: 26rpx;
+  color: #6E7681;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.form-input {
+  width: 100%;
+  background: #F7F7F8;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  font-size: 30rpx;
+  color: #1A1D1F;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 48rpx;
+}
+
+.btn-cancel {
+  flex: 1;
+  background: #F7F7F8;
+  color: #6E7681;
+  border: none;
+  border-radius: 28rpx;
+  padding: 30rpx;
+  font-size: 30rpx;
+}
+.btn-cancel::after { border: none; }
+
+.btn-confirm {
+  flex: 1;
+  background: #00B86B;
+  color: #fff;
+  border: none;
+  border-radius: 28rpx;
+  padding: 30rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.btn-confirm::after { border: none; }

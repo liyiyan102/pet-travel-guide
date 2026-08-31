@@ -1,0 +1,125 @@
+<!--pages/poidetail/poidetail.wxml-->
+<view class="container">
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading-state" style="padding-top: {{statusBarHeight + 200}}px;">
+    <text>加载中...</text>
+  </view>
+
+  <block wx:elif="{{poi.name}}">
+  <!-- 深色 Hero 区 -->
+  <view class="hero" style="padding-top: {{statusBarHeight}}px;">
+    <view class="hero-glow"></view>
+    <view class="hero-icon">
+      <image src="/images/ic-{{heroIcon}}.png" mode="aspectFit" style="width:96rpx;height:96rpx;filter:brightness(0) invert(1);"/>
+    </view>
+  </view>
+
+  <!-- 浮动返回按钮 -->
+  <view class="float-back" bindtap="goBack" style="top: calc({{statusBarHeight}}px + 24rpx);">
+    <image src="/images/ic-back.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/>
+  </view>
+
+  <!-- 内容卡（圆角上覆盖在Hero上） -->
+  <view class="content-card">
+
+    <!-- 标题区 -->
+    <view class="title-row">
+      <view class="title-left">
+        <text class="poi-name">{{poi.name}}</text>
+        <text class="poi-addr">{{poi.district}} · {{poi.address}}</text>
+      </view>
+      <view wx:if="{{poi.pet_friendly}}" class="friendly-badge">
+        <text>✓ 宠物友好</text>
+      </view>
+    </view>
+
+    <!-- 元信息行 -->
+    <view class="meta-row">
+      <view class="meta-item">
+        <text class="meta-ico">💰</text>
+        <text>{{poi.price_label || '免费'}}</text>
+      </view>
+      <view class="meta-item">
+        <text class="meta-ico">⏰</text>
+        <text>{{poi.open_time || '全天'}}</text>
+      </view>
+      <view class="meta-item">
+        <text class="meta-ico">🚌</text>
+        <text>{{poi.transit || '-'}}</text>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <!-- 宠物友好政策 -->
+    <view class="section">
+      <view class="section-title">
+        <text class="sec-ico">🐾</text>
+        <text>宠物友好政策</text>
+      </view>
+      <view class="section-sub">
+        <text>最后更新 {{poi.last_updated || '2026-07-23'}} · 置信度 {{confidenceText}}</text>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="info-row">
+        <text class="info-label">携带政策</text>
+        <text class="info-value">{{poi.policy_carry || '允许，需牵绳'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">体型限制</text>
+        <text class="info-value">{{poi.policy_size || '无限制'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">收费</text>
+        <text class="info-value">{{poi.policy_fee || '免费'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">预约</text>
+        <text class="info-value">{{poi.policy_booking || '无需'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">注意</text>
+        <text class="info-value">{{poi.policy_notice || '文明遛狗'}}</text>
+      </view>
+    </view>
+
+    <!-- 地址 -->
+    <view class="section">
+      <view class="section-title">
+        <text class="sec-ico">📍</text>
+        <text>地址</text>
+      </view>
+      <view class="address-text" bindtap="openMap">{{poi.full_address || poi.address}}</view>
+    </view>
+
+    <view class="bottom-spacer"></view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="action-bar safe-area-bottom">
+    <view class="action-icons">
+      <view class="action-icon-btn" bindtap="callPhone">
+        <image src="/images/ic-phone.png" mode="aspectFit" style="width:36rpx;height:36rpx;"/>
+      </view>
+      <view class="action-icon-btn" bindtap="startNavigation">
+        <image src="/images/ic-navigation.png" mode="aspectFit" style="width:36rpx;height:36rpx;"/>
+      </view>
+    </view>
+    <button class="add-btn" bindtap="addToItinerary">
+      <text class="add-plus">+</text>
+      <text>加入攻略</text>
+    </button>
+  </view>
+
+  <!-- AI 悬浮按钮 -->
+  <view class="ai-fab" bindtap="goToChat">
+    <image src="/images/ic-ai.png" mode="aspectFit" class="ai-fab-icon"/>
+    <text class="ai-fab-text">AI</text>
+  </view>
+
+  </block>
+
+</view>

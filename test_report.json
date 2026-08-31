@@ -1,0 +1,161 @@
+{
+  "timestamp": "2026-07-28T04:17:31.420Z",
+  "summary": {
+    "pass": 21,
+    "fail": 4,
+    "skip": 0,
+    "total": 25
+  },
+  "results": [
+    {
+      "category": "ROUTER",
+      "name": "[标准行程规划] \"帮我规划北京3日游\"",
+      "passed": true,
+      "details": "intent=generate_itinerary, conf=10%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[怎么玩] \"上海怎么玩\"",
+      "passed": true,
+      "details": "intent=generate_itinerary, conf=10%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[做攻略] \"做一个成都攻略\"",
+      "passed": true,
+      "details": "intent=generate_itinerary, conf=10%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[一日游] \"杭州一日游推荐\"",
+      "passed": true,
+      "details": "intent=generate_itinerary, conf=10%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[附近餐厅] \"附近有宠物餐厅吗\"",
+      "passed": true,
+      "details": "intent=search_poi, conf=13%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[找公园] \"找一些公园\"",
+      "passed": true,
+      "details": "intent=search_poi, conf=13%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[推荐酒店] \"推荐酒店\"",
+      "passed": false,
+      "details": "期望: search_poi, 实际: accommodation_search (14%)"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[哪里有景点] \"哪里有好玩的景点\"",
+      "passed": false,
+      "details": "期望: search_poi, 实际: activity_recommendation (16%)"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[天气查询] \"明天天气怎么样\"",
+      "passed": true,
+      "details": "intent=weather_check, conf=15%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[下雨询问] \"杭州下雨吗\"",
+      "passed": true,
+      "details": "intent=weather_check, conf=15%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[食物安全] \"狗能吃巧克力吗\"",
+      "passed": true,
+      "details": "intent=pet_advice, conf=11%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[毒性询问] \"葡萄对狗有毒吗\"",
+      "passed": true,
+      "details": "intent=pet_advice, conf=11%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[受伤紧急] \"我的狗受伤了\"",
+      "passed": true,
+      "details": "intent=emergency_help, conf=8%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[中毒紧急] \"救命狗狗中毒了\"",
+      "passed": true,
+      "details": "intent=emergency_help, conf=16%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[呕吐紧急] \"狗一直呕吐怎么办\"",
+      "passed": false,
+      "details": "期望: emergency_help, 实际: knowledge_query (10%)"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[品种特点] \"金毛的特点是什么\"",
+      "passed": true,
+      "details": "intent=knowledge_query, conf=10%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[原因询问] \"为什么狗不能吃葡萄\"",
+      "passed": false,
+      "details": "期望: knowledge_query, 实际: pet_advice (11%)"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[航空规定] \"带狗坐飞机有什么规定\"",
+      "passed": true,
+      "details": "intent=transport_guide, conf=17%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[高铁规定] \"高铁可以带宠物吗\"",
+      "passed": true,
+      "details": "intent=transport_guide, conf=9%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[酒店搜索] \"宠物友好酒店推荐\"",
+      "passed": true,
+      "details": "intent=accommodation_search, conf=14%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[自我介绍] \"你叫什么名字\"",
+      "passed": true,
+      "details": "intent=chit_chat, conf=0%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[日常闲聊] \"今天心情不错\"",
+      "passed": true,
+      "details": "intent=chit_chat, conf=0%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[感谢] \"谢谢\"",
+      "passed": true,
+      "details": "intent=chit_chat, conf=0%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[图片品种识别] \"这是什么品种\"",
+      "passed": true,
+      "details": "intent=pet_breed_recognition, conf=95%"
+    },
+    {
+      "category": "ROUTER",
+      "name": "[图片食物检测] \"这个能吃吗\"",
+      "passed": true,
+      "details": "intent=food_detection, conf=90%"
+    }
+  ]
+}

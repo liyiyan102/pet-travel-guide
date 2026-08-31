@@ -1,0 +1,179 @@
+<view class="chat-container">
+  <!-- 消息列表 -->
+  <scroll-view 
+    class="message-list" 
+    scroll-y 
+    scroll-into-view="{{toView}}"
+    scroll-with-animation
+    enhanced="{{true}}"
+    show-scrollbar="{{false}}">
+    
+    <block wx:for="{{messages}}" wx:key="id">
+      <!-- 时间分割线 -->
+      <view class="time-divider" wx:if="{{item.showTime}}">
+        <text class="time-text">{{item.timeStr}}</text>
+      </view>
+
+      <!-- 用户消息 -->
+      <view class="message-row message-row-user" wx:if="{{item.role === 'user'}}">
+        <view class="bubble bubble-user">
+          <!-- 文本内容 -->
+          <text class="message-text" wx:if="{{item.content}}" user-select>{{item.content}}</text>
+          <!-- 图片消息 -->
+          <view class="image-wrapper" wx:if="{{item.images && item.images.length > 0}}">
+            <image 
+              wx:for="{{item.images}}" 
+              wx:for-item="img" 
+              wx:key="*this"
+              class="message-image" 
+              src="{{img}}" 
+              mode="widthFix"
+              bindtap="previewImage"
+              data-url="{{img}}"></image>
+          </view>
+        </view>
+        <image class="user-avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      </view>
+
+      <!-- Agent消息 -->
+      <view class="message-row message-row-agent" wx:if="{{item.role === 'assistant'}}">
+        <image class="agent-avatar-small" src="/images/avatar-agent.png" mode="aspectFill"></image>
+        <view class="bubble bubble-agent">
+          <!-- 打字动画 -->
+          <view class="typing-indicator" wx:if="{{item.typing}}">
+            <view class="dot"></view>
+            <view class="dot"></view>
+            <view class="dot"></view>
+          </view>
+          
+          <!-- Markdown风格的内容渲染 -->
+          <rich-text class="message-text agent-text" nodes="{{item.renderedContent}}" wx:if="{{item.renderedContent && !item.typing}}" user-select></rich-text>
+          
+          <!-- 纯文本内容（欢迎语等未经过Markdown处理的消息） -->
+          <text class="message-text agent-text" wx:elif="{{!item.typing}}" user-select>{{item.content}}</text>
+          
+          <!-- 图片分析结果卡片 -->
+          <view class="analysis-card" wx:if="{{item.imageAnalysis}}">
+            <view class="card-header">
+              <text class="card-icon">📷</text>
+              <text class="card-title">图片分析结果</text>
+            </view>
+            <view class="card-body">
+              <view class="analysis-item" wx:if="{{item.imageAnalysis.result.breed}}">
+                <text class="analysis-label">品种识别：</text>
+                <text class="analysis-value">{{item.imageAnalysis.result.breed}}</text>
+                <text class="confidence-badge">{{item.imageAnalysis.result.confidence * 100 || 0}}%</text>
+              </view>
+              <view class="analysis-item" wx:if="{{item.imageAnalysis.result.is_safe !== undefined}}">
+                <text class="analysis-label">安全性：</text>
+                <text class="analysis-value {{item.imageAnalysis.result.is_safe ? 'safe' : 'danger'}}">
+                  {{item.imageAnalysis.result.is_safe ? '✅ 安全' : '❌ 危险'}}
+                </text>
+              </view>
+              <view class="analysis-item" wx:if="{{item.imageAnalysis.result.pet_friendly_score}}">
+                <text class="analysis-label">宠物友好度：</text>
+                <text class="analysis-value">{{item.imageAnalysis.result.pet_friendly_score}}/10</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 行程数据卡片 -->
+          <view class="itinerary-card" wx:if="{{item.itineraryData}}" bindtap="viewItinerary" data-id="{{item.itineraryData.itinerary_id}}">
+            <view class="card-header itinerary-header">
+              <text class="card-icon">🗺️</text>
+              <text class="card-title">{{item.itineraryData.title}}</text>
+            </view>
+            <view class="itinerary-days">
+              <view class="day-tag" wx:for="{{item.itineraryData.days_data}}" wx:key="day">
+                D{{item.day}}
+              </view>
+            </view>
+            <view class="card-footer">点击查看完整行程 →</view>
+          </view>
+
+          <!-- 建议操作按钮 -->
+          <view class="suggestion-chips" wx:if="{{item.suggestions && item.suggestions.length > 0 && !item.typing}}">
+            <view 
+              class="suggestion-chip" 
+              wx:for="{{item.suggestions}}" 
+              wx:key="text"
+              bindtap="useSuggestion"
+              data-text="{{item.text}}"
+              data-type="{{item.type}}">
+              {{item.text}}
+            </view>
+          </view>
+
+          <!-- 快捷操作 -->
+          <view class="quick-actions" wx:if="{{item.actions && item.actions.length > 0 && !item.typing}}">
+            <view 
+              class="action-btn" 
+              wx:for="{{item.actions}}" 
+              wx:key="label"
+              bindtap="handleAction"
+              data-action="{{item}}">
+              {{item.label}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 底部占位 -->
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <!-- 功能入口 -->
+    <view class="feature-entries">
+      <view class="feature-item" bindtap="quickAction" data-action="itinerary">
+        <text class="feature-icon">🗺️</text>
+        <text class="feature-text">规划行程</text>
+      </view>
+      <view class="feature-item" bindtap="quickAction" data-action="poi">
+        <text class="feature-icon">🔍</text>
+        <text class="feature-text">搜场所</text>
+      </view>
+      <view class="feature-item" bindtap="chooseImage">
+        <text class="feature-icon">📷</text>
+        <text class="feature-text">发图片</text>
+      </view>
+      <view class="feature-item" bindtap="quickAction" data-action="knowledge">
+        <text class="feature-icon">📚</text>
+        <text class="feature-text">问知识</text>
+      </view>
+    </view>
+
+    <!-- 输入框 -->
+    <view class="input-wrapper">
+      <input 
+        class="message-input" 
+        type="text"
+        placeholder="和小D聊聊旅行吧..." 
+        value="{{inputText}}"
+        bindinput="onInput"
+        bindconfirm="sendMessage"
+        confirm-type="send"
+        adjust-position="{{true}}"
+        hold-keyboard="{{false}}"/>
+      
+      <!-- 图片预览 -->
+      <view class="preview-images" wx:if="{{selectedImages.length > 0}}">
+        <view class="preview-item" wx:for="{{selectedImages}}" wx:key="*this">
+          <image class="preview-img" src="{{item}}" mode="aspectFill"></image>
+          <view class="remove-img" catchtap="removeImage" data-index="{{index}}">×</view>
+        </view>
+      </view>
+
+      <view class="input-actions">
+        <view class="icon-btn" bindtap="chooseImage">
+          <text class="plus-icon">+</text>
+        </view>
+        <view class="send-btn {{inputText ? 'active' : ''}}" bindtap="sendMessage">
+          <text>发送</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

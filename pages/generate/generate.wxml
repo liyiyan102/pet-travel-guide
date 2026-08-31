@@ -1,0 +1,167 @@
+<!-- 攻略定制页 - 对齐视觉稿 -->
+<scroll-view class="gen-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="gen-content">
+
+    <!-- 标题 -->
+    <view class="gen-header">
+      <view class="h1" style="font-size:60rpx;">生成携宠攻略</view>
+      <view class="sub" style="margin-top:12rpx;">AI对话直接发起请点右下角 AI 按钮</view>
+    </view>
+
+    <!-- 表单卡片 -->
+    <view class="form-card">
+
+      <!-- 目的地 -->
+      <view class="fg">
+        <text class="fl">目的地</text>
+        <view class="fi" bindtap="chooseLocation">
+          <text style="display:flex;align-items:center;gap:8rpx;color:{{formData.destination ? '#1A1D1F' : '#A8B0B8'}};">
+            <image src="/images/ic-location.png" mode="aspectFit" style="width:28rpx;height:28rpx;"/> {{formData.destination || '选择目的地，如北京'}}
+          </text>
+          <image src="/images/ic-arrow-right.png" mode="aspectFit" style="width:28rpx;height:28rpx;"/>
+        </view>
+      </view>
+
+      <!-- 天数 -->
+      <view class="fg">
+        <text class="fl">天数</text>
+        <view class="fi" style="justify-content:center;font-weight:600;">
+          <view class="num-ctrl">
+            <view bindtap="decDay" class="num-btn">−</view>
+            <text>{{formData.days}} 天</text>
+            <view bindtap="incDay" class="num-btn">＋</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 宠物 -->
+      <view class="fg">
+        <text class="fl">宠物</text>
+        <view class="cg">
+          <view class="sc {{formData.petType === 'dog' ? 'on' : ''}}" bindtap="setPetType" data-type="dog">
+            <image src="/images/ic-dog.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/> 狗
+          </view>
+          <view class="sc {{formData.petType === 'cat' ? 'on' : ''}}" bindtap="setPetType" data-type="cat">猫</view>
+        </view>
+      </view>
+
+      <!-- 体型 -->
+      <view class="fg">
+        <text class="fl">体型</text>
+        <view class="cg">
+          <view class="sc {{formData.petSize === 'small' ? 'on' : ''}}" bindtap="setPetSize" data-size="small">小型</view>
+          <view class="sc {{formData.petSize === 'medium' ? 'on' : ''}}" bindtap="setPetSize" data-size="medium">中型</view>
+          <view class="sc {{formData.petSize === 'large' ? 'on' : ''}}" bindtap="setPetSize" data-size="large">大型</view>
+        </view>
+      </view>
+
+      <!-- 出行方式 -->
+      <view class="fg">
+        <text class="fl">出行方式</text>
+        <view class="cg">
+          <view class="sc {{formData.transport === 'car' ? 'on' : ''}}" bindtap="setTransport" data-mode="car">
+            <image src="/images/ic-car.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/> 自驾
+          </view>
+          <view class="sc {{formData.transport === 'public' ? 'on' : ''}}" bindtap="setTransport" data-mode="public">
+            <image src="/images/ic-bus.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/> 公交
+          </view>
+          <view class="sc {{formData.transport === 'walk' ? 'on' : ''}}" bindtap="setTransport" data-mode="walk">
+            <image src="/images/ic-walk.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/> 步行
+          </view>
+        </view>
+      </view>
+
+      <!-- 偏好 -->
+      <view class="fg">
+        <text class="fl">偏好</text>
+        <view class="cg">
+          <view
+            wx:for="{{generateOptions}}"
+            wx:key="id"
+            class="sc {{item.selected ? 'on' : ''}}"
+            data-id="{{item.id}}"
+            bindtap="onOptionToggle"
+          >{{item.label}}</view>
+        </view>
+      </view>
+
+      <!-- 特殊要求 -->
+      <view class="fg" style="margin-bottom:0;">
+        <text class="fl">特殊要求（可选）</text>
+        <view class="fi" style="padding:28rpx 36rpx;">
+          <input
+            placeholder="如：避开人多、预算5000..."
+            value="{{formData.specialNeeds}}"
+            bindinput="onSpecialNeedsInput"
+            style="font-size:30rpx;flex:1;"
+          />
+        </view>
+      </view>
+    </view>
+
+    <!-- 生成进度 -->
+    <view wx:if="{{generating}}" class="progress-card">
+      <view style="font-size:28rpx;color:#6E7681;text-align:center;">AI正在为您规划行程...</view>
+      <view class="progress-steps">
+        <view wx:for="{{progressSteps}}" wx:key="index" class="progress-step {{item.status}}">
+          <text class="step-dot">{{item.status === 'completed' ? '✓' : (item.status === 'current' ? '●' : '○')}}</text>
+          <text>{{item.text}}</text>
+        </view>
+      </view>
+      <view class="cancel-btn" bindtap="cancelGenerate">取消生成</view>
+    </view>
+
+    <!-- 生成结果 -->
+    <view wx:if="{{generatedItinerary && !generating}}" class="result-card">
+      <view class="result-header">
+        <text class="h3">✓ 生成完成</text>
+        <text class="sub" wx:if="{{generatedItinerary.destination}}">{{generatedItinerary.destination}} · {{formData.days}}日游</text>
+      </view>
+
+      <!-- Agent 文本行程 -->
+      <view wx:if="{{generatedItinerary.content}}" class="agent-content">{{generatedItinerary.content}}</view>
+
+      <!-- 兼容旧结构化格式 -->
+      <view wx:elif="{{generatedItinerary.days_data}}" class="days-preview">
+        <view wx:for="{{generatedItinerary.days_data}}" wx:key="day" class="day-row">
+          <text class="day-label">Day {{item.day}}：{{item.theme}}</text>
+          <view class="spot-tags">
+            <text wx:for="{{item.spots}}" wx:key="name" wx:for-item="spot" class="pill pill-k">{{spot.name}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 建议按钮 -->
+      <view wx:if="{{generatedItinerary.suggestions.length > 0}}" class="result-suggestions">
+        <view wx:for="{{generatedItinerary.suggestions}}" wx:key="text" class="suggestion-btn" bindtap="onSuggestionTap" data-text="{{item.text}}">
+          {{item.text}}
+        </view>
+      </view>
+
+      <view class="result-actions">
+        <button class="btn-secondary" bindtap="previewItinerary">预览详情</button>
+        <button class="btn-green" bindtap="saveAndEdit">保存并编辑</button>
+      </view>
+    </view>
+
+    <view style="height:40rpx;"></view>
+
+    <!-- 生成按钮（流式布局，非悬浮） -->
+    <button
+      class="btn-green gen-btn {{generating || !canGenerate ? 'btn-disabled' : ''}}"
+      disabled="{{generating || !canGenerate}}"
+      bindtap="onGenerate"
+    >
+      <image src="/images/ic-ai.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/>
+      <text>{{generating ? '生成中...' : '生成定制攻略'}}</text>
+    </button>
+
+    <view class="tab-safe"></view>
+  </view>
+</scroll-view>
+
+<!-- AI悬浮按钮 -->
+<view class="ai-fab" bindtap="goToChat">
+  <image src="/images/ic-ai.png" mode="aspectFit" class="ai-fab-icon"/>
+  <text class="ai-fab-text">AI</text>
+</view>

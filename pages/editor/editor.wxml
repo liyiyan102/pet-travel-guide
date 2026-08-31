@@ -1,0 +1,194 @@
+<!--pages/editor/editor.wxml-->
+<view class="container">
+  <!-- 编辑模式：顶部导航栏 -->
+  <view wx:if="{{!isPreview}}" class="editor-header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="header-left" bindtap="goBack">
+      <image src="/images/ic-back.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/>
+      <text>返回</text>
+    </view>
+    <text class="header-title">编辑行程</text>
+    <view class="header-right">
+      <text class="save-btn {{hasChanges ? 'highlight' : ''}}" bindtap="saveItinerary">保存</text>
+    </view>
+  </view>
+
+  <!-- 编辑模式：标题卡片 -->
+  <view wx:if="{{!isPreview}}" class="trip-title-card">
+    <view class="trip-title">{{itinerary.title || itinerary.destination || '未命名攻略'}}</view>
+    <view class="trip-meta">
+      <text class="meta-item">{{itinerary.destination || ''}}</text>
+      <text class="meta-dot" wx:if="{{itinerary.destination}}">·</text>
+      <text class="meta-item">{{itinerary.days || 0}}天</text>
+      <text class="meta-dot">·</text>
+      <text class="meta-item">{{totalSpots}}个地点</text>
+    </view>
+  </view>
+
+  <!-- 地图可视化区 -->
+  <view class="map-section {{isPreview ? 'map-fulltop' : ''}}">
+    <map
+      id="tripMap"
+      latitude="{{mapCenter.latitude}}"
+      longitude="{{mapCenter.longitude}}"
+      scale="12"
+      markers="{{markers}}"
+      show-location
+      class="trip-map"
+    ></map>
+    <!-- 预览模式浮动返回按钮 -->
+    <view wx:if="{{isPreview}}" class="float-back" bindtap="goBack" style="top: calc({{statusBarHeight}}px + 24rpx);">
+      <image src="/images/ic-back.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/>
+    </view>
+    <!-- 当天主题覆盖层 -->
+    <view class="map-overlay" wx:if="{{currentDay}}">
+      <view class="overlay-day">Day {{currentDay.day}}</view>
+      <view class="overlay-theme" wx:if="{{isPreview}}">{{itinerary.title || currentDay.theme}}</view>
+      <view class="overlay-theme" wx:else>{{currentDay.theme}}</view>
+      <view class="overlay-meta" wx:if="{{isPreview}}">{{itinerary.days || 0}}天 · {{totalSpots}}个地点</view>
+    </view>
+  </view>
+
+  <!-- 天数选择器 -->
+  <scroll-view scroll-x enhanced show-scrollbar="{{false}}" class="day-tabs" wx:if="{{itinerary.days_data && itinerary.days_data.length > 0}}">
+    <view class="day-tabs-inner">
+      <view
+        wx:for="{{itinerary.days_data}}"
+        wx:key="day"
+        class="day-tab {{currentDayIndex === index ? 'active' : ''}}"
+        data-index="{{index}}"
+        bindtap="onDayChange"
+      >
+        <text class="day-tab-num">Day{{item.day}}</text>
+        <text class="day-tab-theme">{{item.theme}}</text>
+      </view>
+      <view wx:if="{{!isPreview}}" class="day-tab add-day" bindtap="addDay">
+        <text class="add-day-text">+ 添加</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 地点时间线列表 -->
+  <view class="spots-timeline">
+    <view
+      wx:for="{{currentDay.spots}}"
+      wx:key="name"
+      class="spot-item {{item._swiping ? 'swiping' : ''}} {{item._dragging ? 'dragging' : ''}}"
+      data-index="{{index}}"
+      data-name="{{item.name}}"
+      style="transform: translateX({{item._offsetX || 0}}rpx);"
+      bindtap="{{isPreview ? 'onSpotTap' : 'editSpot'}}"
+      bindlongpress="onSpotLongPress"
+      bindtouchstart="onTouchStart"
+      bindtouchmove="onTouchMove"
+      bindtouchend="onTouchEnd"
+    >
+      <!-- 拖拽排序指示器 -->
+      <view class="drag-handle" wx:if="{{!isPreview && _dragMode}}">
+        <text class="drag-icon">☰</text>
+      </view>
+
+      <!-- 时间线左侧 -->
+      <view class="timeline-left">
+        <view class="timeline-dot {{item.pet_friendly ? 'friendly' : 'unfriendly'}}">{{index + 1}}</view>
+        <view class="timeline-line" wx:if="{{index < currentDay.spots.length - 1 && !_dragMode}}"></view>
+      </view>
+
+      <!-- 地点卡片 -->
+      <view class="spot-card-inner">
+        <!-- 主标题行：地点名称 + 宠物友好标签 -->
+        <view class="spot-top">
+          <text class="spot-name">{{item.name}}</text>
+          <view class="spot-pet-badge {{item.pet_friendly ? 'ok' : 'no'}}" wx:if="{{item.pet_friendly !== undefined}}">
+            <text>{{item.pet_friendly ? '宠物友好' : '需注意'}}</text>
+          </view>
+        </view>
+        <!-- 第二行：附属备注（类型、时间、时长、备注） -->
+        <view class="spot-sub">
+          <view class="info-chip" wx:if="{{item.type}}">
+            <image src="/images/ic-{{spotIconMap[item.type] || 'location'}}.png" mode="aspectFit" style="width:24rpx;height:24rpx;"/>
+            <text>{{getTypeName(item.type)}}</text>
+          </view>
+          <view class="info-chip" wx:if="{{item.time}}">
+            <image src="/images/ic-clock.png" mode="aspectFit" style="width:24rpx;height:24rpx;"/>
+            <text>{{item.time}}</text>
+          </view>
+          <view class="info-chip" wx:if="{{item.duration}}">
+            <text>{{item.duration}}</text>
+          </view>
+          <text class="spot-note-inline" wx:if="{{item.note}}">{{item.note}}</text>
+        </view>
+
+        <!-- 拖拽模式提示 -->
+        <view wx:if="{{!isPreview && _dragMode}}" class="drag-hint-row">
+          <text>长按拖动排序</text>
+        </view>
+      </view>
+
+      <!-- 左滑删除按钮（点击确认删除） -->
+      <view class="swipe-delete-btn" wx:if="{{!isPreview && item._showDelete}}" catchtap="confirmDeleteSpot" data-index="{{index}}">
+        <text>删除</text>
+      </view>
+    </view>
+
+    <!-- 纯文本内容展示（Agent 生成无结构化数据时） -->
+    <view wx:if="{{itinerary.content && (!currentDay.spots || currentDay.spots.length === 0)}}" class="text-content-card">
+      <text class="text-content" user-select="{{true}}">{{itinerary.content}}</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{(!currentDay.spots || currentDay.spots.length === 0) && !itinerary.content}}" class="empty-spots">
+      <text>暂无地点安排</text>
+    </view>
+  </view>
+
+  <!-- 编辑模式：添加地点按钮 -->
+  <view wx:if="{{!isPreview}}" class="add-spot-row" bindtap="addSpot">
+    <image src="/images/ic-plus.png" mode="aspectFit" style="width:32rpx;height:32rpx;"/>
+    <text>添加地点</text>
+  </view>
+
+  <!-- 预览模式：保存按钮 -->
+  <view wx:if="{{isPreview}}" class="preview-actions">
+    <button class="btn-secondary" bindtap="goBack">返回</button>
+    <button class="btn-green" bindtap="saveToMyTrips">保存到我的攻略</button>
+  </view>
+
+  <view class="tab-safe"></view>
+
+  <!-- 编辑地点弹窗 -->
+  <view wx:if="{{showEditPopup}}" class="popup-mask" bindtap="closeEditPopup">
+    <view class="popup-content" catchtap="">
+      <view class="popup-title">{{editingIndex >= 0 ? '编辑地点' : '添加地点'}}</view>
+      <view class="form-group">
+        <text class="form-label">地点名称</text>
+        <input class="form-input" placeholder="请输入地点名称" value="{{formData.name}}" bindinput="onFormInput" data-field="name"/>
+      </view>
+      <view class="form-group">
+        <text class="form-label">类型</text>
+        <picker range="{{spotTypes}}" value="{{typeIndex}}" bindchange="onTypeChange">
+          <view class="picker-value">{{spotTypes[typeIndex] || '请选择'}}</view>
+        </picker>
+      </view>
+      <view class="form-group">
+        <text class="form-label">时间</text>
+        <input class="form-input" placeholder="如：09:00" value="{{formData.time}}" bindinput="onFormInput" data-field="time"/>
+      </view>
+      <view class="form-group">
+        <text class="form-label">预计时长</text>
+        <input class="form-input" placeholder="如：2h" value="{{formData.duration}}" bindinput="onFormInput" data-field="duration"/>
+      </view>
+      <view class="form-group">
+        <text class="form-label">宠物友好</text>
+        <switch checked="{{formData.pet_friendly}}" bindchange="onPetFriendlyChange" color="#00B86B"/>
+      </view>
+      <view class="form-group">
+        <text class="form-label">备注</text>
+        <textarea class="form-textarea" placeholder="添加备注信息..." value="{{formData.note}}" bindinput="onFormInput" data-field="note"></textarea>
+      </view>
+      <view class="popup-actions">
+        <button class="btn-cancel" bindtap="closeEditPopup">取消</button>
+        <button class="btn-confirm" bindtap="confirmEdit">确认</button>
+      </view>
+    </view>
+  </view>
+</view>

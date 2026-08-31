@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🗺️ 宠物旅行地图 - 腾讯地图</title>
+  <!-- 腾讯地图JavaScript API -->
+  <script src="https://map.qq.com/api/gljs?v=1.exp&key=TO7BZ-NEGKA-C5HKG-CSNZU-DONB6-5EBWM"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f7fa;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* 顶部导航 */
+    .header {
+      background: linear-gradient(135deg, #27AE60 0%, #1E8449 100%);
+      color: white;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(39,174,96,0.3);
+      z-index: 100;
+      position: relative;
+    }
+    .header h1 { font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .header-actions { display: flex; gap: 10px; }
+    .header-btn {
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 16px;
+      color: white;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .header-btn:hover { background: rgba(255,255,255,0.3); }
+
+    /* 主容器 */
+    .main-container {
+      display: flex;
+      height: calc(100vh - 52px);
+    }
+
+    /* 左侧面板 */
+    .sidebar {
+      width: 380px;
+      background: white;
+      border-right: 1px solid #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* 搜索区域 */
+    .search-section {
+      padding: 16px;
+      border-bottom: 1px solid #eee;
+      background: #fafafa;
+    }
+    .search-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .search-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 20px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: #27AE60; }
+    .search-btn {
+      padding: 10px 18px;
+      background: linear-gradient(135deg, #27AE60, #1E8449);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .search-btn:hover { transform: scale(1.02); }
+
+    /* 快捷分类 */
+    .category-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .category-tag {
+      padding: 5px 12px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #555;
+    }
+    .category-tag:hover, .category-tag.active {
+      background: #27AE60;
+      color: white;
+      border-color: #27AE60;
+    }
+
+    /* 结果列表 */
+    .results-section {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+    .results-header {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 10px;
+      padding: 0 4px;
+    }
+    .poi-card {
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .poi-card:hover {
+      border-color: #27AE60;
+      box-shadow: 0 4px 12px rgba(39,174,96,0.15);
+      transform: translateY(-1px);
+    }
+    .poi-card.active {
+      border-color: #27AE60;
+      background: #f8fff8;
+    }
+    .poi-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pet-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      background: #27AE60;
+      color: white;
+      border-radius: 8px;
+      font-weight: normal;
+    }
+    .poi-address {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 6px;
+    }
+    .poi-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      color: #888;
+    }
+    .poi-distance { color: #27AE60; font-weight: 500; }
+    .poi-rating { color: #f39c12; }
+
+    /* 地图区域 */
+    .map-container {
+      flex: 1;
+      position: relative;
+    }
+    #mapContainer {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 路线规划面板 */
+    .route-panel {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      width: 320px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      z-index: 50;
+      display: none;
+    }
+    .route-panel.show { display: block; }
+    .route-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .route-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #999;
+    }
+    .route-input-group {
+      margin-bottom: 12px;
+    }
+    .route-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    .route-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+    .route-input:focus { border-color: #27AE60; }
+    .route-mode-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .mode-tab {
+      flex: 1;
+      padding: 8px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      background: white;
+      transition: all 0.2s;
+    }
+    .mode-tab:hover { border-color: #27AE60; }
+    .mode-tab.active {
+      background: #27AE60;
+      color: white;
+      border-color: #27AE60;
+    }
+    .route-plan-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #27AE60, #1E8449);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .route-plan-btn:hover { opacity: 0.95; }
+
+    /* 路线结果 */
+    .route-result {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #eee;
+      display: none;
+    }
+    .route-result.show { display: block; }
+    .route-summary {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    .summary-item {
+      text-align: center;
+    }
+    .summary-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: #27AE60;
+    }
+    .summary-label {
+      font-size: 11px;
+      color: #888;
+    }
+    .route-steps {
+      max-height: 150px;
+      overflow-y: auto;
+      font-size: 12px;
+      color: #555;
+    }
+    .step-item {
+      padding: 6px 0;
+      border-bottom: 1px solid #f5f5f5;
+      line-height: 1.5;
+    }
+
+    /* 加载状态 */
+    .loading {
+      text-align: center;
+      padding: 30px;
+      color: #999;
+    }
+    .loading-spinner {
+      width: 30px;
+      height: 30px;
+      border: 3px solid #f0f0f0;
+      border-top-color: #27AE60;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 10px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* 空状态 */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+    .empty-icon { font-size: 48px; margin-bottom: 12px; }
+    .empty-text { font-size: 14px; }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .sidebar { width: 100%; position: fixed; bottom: 0; left: 0; height: 45%; z-index: 90; border-right: none; border-top: 1px solid #ddd; border-radius: 16px 16px 0 0; }
+      .map-container { height: 55%; }
+      .route-panel { width: calc(100% - 32px); left: 16px; right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<div class="header">
+  <h1>🗺️ 宠物旅行地图</h1>
+  <div class="header-actions">
+    <button class="header-btn" onclick="toggleRoutePanel()">🚗 路线规划</button>
+    <button class="header-btn" onclick="location.href='test.html'">💬 返回对话</button>
+  </div>
+</div>
+
+<div class="main-container">
+  <!-- 左侧搜索面板 -->
+  <div class="sidebar">
+    <div class="search-section">
+      <div class="search-row">
+        <input type="text" id="locationInput" class="search-input" placeholder="输入城市或位置..." value="杭州">
+        <input type="text" id="keywordInput" class="search-input" placeholder="搜索关键词..." style="flex: 0.8;">
+        <button class="search-btn" onclick="searchPOI()">搜索</button>
+      </div>
+      <div class="category-tags">
+        <span class="category-tag active" data-category="all" onclick="selectCategory(this)">全部</span>
+        <span class="category-tag" data-category="restaurant" onclick="selectCategory(this)">🍽️ 餐厅</span>
+        <span class="category-tag" data-category="hotel" onclick="selectCategory(this)">🏨 酒店</span>
+        <span class="category-tag" data-category="park" onclick="selectCategory(this)">🌳 公园</span>
+        <span class="category-tag" data-category="hospital" onclick="selectCategory(this)">🏥 医院</span>
+        <span class="category-tag" data-category="cafe" onclick="selectCategory(this)">☕ 猫咖</span>
+        <span class="category-tag" data-category="grooming" onclick="selectCategory(this)">✨ 美容</span>
+        <span class="category-tag" data-category="scenic" onclick="selectCategory(this)">🎡 景点</span>
+      </div>
+    </div>
+
+    <div class="results-section" id="resultsSection">
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">输入位置和关键词，搜索宠物友好场所</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 地图区域 -->
+  <div class="map-container">
+    <div id="mapContainer"></div>
+    
+    <!-- 路线规划面板 -->
+    <div class="route-panel" id="routePanel">
+      <div class="route-title">
+        <span>🚗 路线规划</span>
+        <button class="route-close" onclick="toggleRoutePanel()">×</button>
+      </div>
+      
+      <div class="route-input-group">
+        <div class="route-label">起点</div>
+        <input type="text" class="route-input" id="routeFrom" placeholder="输入起点地址或点击地图选择">
+      </div>
+      <div class="route-input-group">
+        <div class="route-label">终点</div>
+        <input type="text" class="route-input" id="routeTo" placeholder="输入终点地址或点击地图选择">
+      </div>
+      
+      <div class="route-mode-tabs">
+        <button class="mode-tab active" data-mode="driving" onclick="selectMode(this)">驾车</button>
+        <button class="mode-tab" data-mode="walking" onclick="selectMode(this)">步行</button>
+        <button class="mode-tab" data-mode="transit" onclick="selectMode(this)">公交</button>
+        <button class="mode-tab" data-mode="bicycling" onclick="selectMode(this)">骑行</button>
+      </div>
+      
+      <button class="route-plan-btn" onclick="planRoute()">开始规划</button>
+      
+      <div class="route-result" id="routeResult">
+        <div class="route-summary">
+          <div class="summary-item">
+            <div class="summary-value" id="routeDistance">-</div>
+            <div class="summary-label">总距离</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-value" id="routeDuration">-</div>
+            <div class="summary-label">预计时间</div>
+          </div>
+        </div>
+        <div class="route-steps" id="routeSteps"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==================== 配置 ====================
+const API_BASE = 'http://localhost:3000'
+const MAP_KEY = 'CGQBZ-W5VCT-EHBXZ-VZNGB-PU2N7-ZLFG4'
+
+// ==================== 全局变量 ====================
+let map = null
+let markers = []
+let currentRouteLine = null
+let selectedCategory = 'all'
+let routeMode = 'driving'
+
+// ==================== 初始化地图 ====================
+function initMap() {
+  // 初始化腾讯地图实例
+  map = new TMap.Map(document.getElementById('mapContainer'), {
+    center: new TMap.LatLng(30.2741, 120.1551), // 杭州中心
+    zoom: 13,
+    viewMode: '2D',
+    mapStyleId: 'style1', // 标准样式
+    baseMap: {
+      type: 'vector'
+    }
+  })
+
+  // 添加缩放控件
+  const zoomControl = new TMap.control.Zoom({
+    position: TMap.constants.POSITION.BOTTOM_RIGHT
+  })
+  map.addControl(zoomControl)
+
+  console.log('地图初始化完成')
+}
+
+// ==================== POI搜索 ====================
+async function searchPOI() {
+  const location = document.getElementById('locationInput').value.trim()
+  const keyword = document.getElementById('keywordInput').value.trim()
+  
+  if (!location) {
+    alert('请输入位置')
+    return
+  }
+
+  showLoading()
+
+  try {
+    const params = new URLSearchParams({
+      location,
+      category: selectedCategory,
+      radius: 8000
+    })
+    if (keyword) params.append('keyword', keyword)
+
+    const response = await fetch(`${API_BASE}/api/map/poi/search?${params}`)
+    const result = await response.json()
+
+    if (result.success && result.data && result.data.pois) {
+      renderPOIs(result.data.pois)
+      showOnMap(result.data.pois)
+    } else {
+      showEmpty('未找到相关地点')
+    }
+  } catch (error) {
+    console.error('搜索失败:', error)
+    showError('搜索失败，请检查服务是否启动')
+  }
+}
+
+/**
+ * 渲染POI列表
+ */
+function renderPOIs(pois) {
+  const container = document.getElementById('resultsSection')
+  
+  if (!pois || pois.length === 0) {
+    showEmpty('未找到相关地点')
+    return
+  }
+
+  let html = `<div class="results-header">找到 ${pois.length} 个宠物友好场所</div>`
+  
+  pois.forEach((poi, index) => {
+    const isPetFriendly = poi.pet_friendly
+    const distance = poi.distance ? `${(poi.distance / 1000).toFixed(1)}km` : '-'
+    const rating = poi.rating ? `⭐ ${poi.rating}` : ''
+    
+    html += `
+      <div class="poi-card" onclick="focusPOI(${index})" data-index="${index}">
+        <div class="poi-name">
+          ${poi.name || '未知地点'}
+          ${isPetFriendly ? '<span class="pet-badge">🐾 宠物友好</span>' : ''}
+        </div>
+        <div class="poi-address">📍 ${poi.address || '暂无地址'}</div>
+        <div class="poi-meta">
+          <span class="poi-distance">${distance}</span>
+          <span class="poi-rating">${rating}</span>
+          <span>${poi.category || ''}</span>
+        </div>
+      </div>
+    `
+  })
+
+  container.innerHTML = html
+  window.currentPois = pois
+}
+
+/**
+ * 在地图上显示POI标记
+ */
+function showOnMap(pois) {
+  // 清除旧标记
+  clearMarkers()
+
+  if (!pois || pois.length === 0) return
+
+  // 创建标记
+  markers = pois.map((poi, index) => {
+    if (!poi.location || !poi.location.lat) return null
+    
+    const marker = new TMap.MultiMarker({
+      map: map,
+      styles: {
+        marker: new TMap.MarkerStyle({
+          width: 24,
+          height: 34,
+          anchor: { x: 12, y: 34 },
+          color: '#27AE60'
+        }),
+        active: new TMap.MarkerStyle({
+          width: 28,
+          height: 40,
+          anchor: { x: 14, 40 },
+          color: '#E74C3C'
+        })
+      },
+      geometries: [{
+        id: index,
+        styleId: 'marker',
+        position: new TMap.LatLng(poi.location.lat, poi.location.lng),
+        properties: {
+          title: poi.name,
+          index: index
+        }
+      }]
+    })
+
+    // 点击事件
+    marker.on('click', (evt) => {
+      focusPOI(evt.geometry.properties.index)
+    })
+
+    return marker
+  }).filter(m => m !== null)
+
+  // 自动调整视野
+  if (markers.length > 0) {
+    fitBounds(pois)
+  }
+}
+
+/**
+ * 聚焦到某个POI
+ */
+function focusPOI(index) {
+  const poi = window.currentPois?.[index]
+  if (!poi || !poi.location) return
+
+  // 移动地图中心
+  map.setCenter(new TMap.LatLng(poi.location.lat, poi.location.lng))
+  map.setZoom(16)
+
+  // 高亮卡片
+  document.querySelectorAll('.poi-card').forEach(card => card.classList.remove('active'))
+  document.querySelector(`.poi-card[data-index="${index}"]`)?.classList.add('active')
+
+  // 显示信息窗口
+  showInfoWindow(poi)
+}
+
+/**
+ * 显示信息窗口
+ */
+function showInfoWindow(poi) {
+  // 创建信息窗口
+  const infoWindow = new TMap.InfoWindow({
+    map: map,
+    position: new TMap.LatLng(poi.location.lat, poi.location.lng),
+    content: `
+      <div style="padding: 8px; min-width: 180px;">
+        <strong style="font-size: 14px;">${poi.name || '未知'}</strong>
+        <p style="margin: 6px 0; color: #666; font-size: 12px;">${poi.address || ''}</p>
+        ${poi.pet_friendly ? '<span style="background:#27AE60;color:white;padding:2px 8px;border-radius:10px;font-size:11px;">🐾 宠物友好</span>' : ''}
+        <br><br>
+        <button onclick="setAsDestination('${poi.name}', ${poi.location.lat}, ${poi.location.lng})" 
+                style="padding:6px 12px;background:#27AE60;color:white;border:none;border-radius:4px;cursor:pointer;font-size:12px;">
+          🚗 导航到这
+        </button>
+      </div>
+    `,
+    offset: { x: 0, y: -40 }
+  })
+
+  // 关闭其他信息窗口
+  setTimeout(() => infoWindow.close(), 8000)
+}
+
+/**
+ * 设置为导航目的地
+ */
+function setAsDestination(name, lat, lng) {
+  document.getElementById('routeTo').value = name
+  toggleRoutePanel(true)
+}
+
+/**
+ * 自适应视野
+ */
+function fitBounds(pois) {
+  const validPois = pois.filter(p => p.location && p.location.lat)
+  if (validPois.length === 0) return
+
+  const bounds = new TMap.LatLngBounds()
+  validPois.forEach(poi => {
+    bounds.extend(new TMap.LatLng(poi.location.lat, poi.location.lng))
+  })
+
+  map.fitBounds(bounds, { padding: 60 })
+}
+
+// ==================== 路线规划 ====================
+function toggleRoutePanel(forceShow) {
+  const panel = document.getElementById('routePanel')
+  if (forceShow === true) {
+    panel.classList.add('show')
+  } else if (forceShow === false) {
+    panel.classList.remove('show')
+  } else {
+    panel.classList.toggle('show')
+  }
+}
+
+function selectMode(el) {
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'))
+  el.classList.add('active')
+  routeMode = el.dataset.mode
+}
+
+async function planRoute() {
+  const from = document.getElementById('routeFrom').value.trim()
+  const to = document.getElementById('routeTo').value.trim()
+
+  if (!from || !to) {
+    alert('请输入起点和终点')
+    return
+  }
+
+  try {
+    const endpoint = `/api/map/route/${routeMode}`
+    const response = await fetch(`${API_BASE}${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from, to })
+    })
+
+    const result = await response.json()
+
+    if (result.success && result.data) {
+      drawRoute(result.data)
+      showRouteResult(result.data)
+    } else {
+      alert('路线规划失败：' + (result.error || '未知错误'))
+    }
+  } catch (error) {
+    console.error('路线规划错误:', error)
+    alert('路线规划失败，请检查网络连接')
+  }
+}
+
+/**
+ * 绘制路线
+ */
+function drawRoute(routeData) {
+  // 清除旧路线
+  if (currentRouteLine) {
+    currentRouteLine.setMap(null)
+    currentRouteLine = null
+  }
+
+  if (!routeData.routes || !routeData.routes[0]) return
+
+  const route = routeData.routes[0]
+  
+  // 解析polyline坐标
+  let coordinates = []
+  if (route.polyline) {
+    coordinates = decodePolyline(route.polyline)
+  } else if (route.steps) {
+    // 从steps中提取坐标
+    route.steps.forEach(step => {
+      if (step.polyline) {
+        coordinates.push(...decodePolyline(step.polyline))
+      }
+    })
+  }
+
+  if (coordinates.length > 0) {
+    currentRouteLine = new TMap.MultiPolyline({
+      map: map,
+      styles: {
+        route: new TMap.PolylineStyle({
+          color: '#27AE60',
+          width: 5,
+          lineWidth: 5,
+          lineCap: 'round'
+        })
+      },
+      geometries: [{
+        styleId: 'route',
+        paths: coordinates.map(c => new TMap.LatLng(c.lat, c.lng))
+      }]
+    })
+
+    // 自适应路线范围
+    if (coordinates.length > 0) {
+      const bounds = new TMap.LatLngBounds()
+      coordinates.forEach(c => bounds.extend(new TMap.LatLng(c.lat, c.lng)))
+      map.fitBounds(bounds, { padding: 80 })
+    }
+  }
+}
+
+/**
+ * 显示路线结果
+ */
+function showRouteResult(routeData) {
+  const resultDiv = document.getElementById('routeResult')
+  const summary = routeData.summary
+  
+  document.getElementById('routeDistance').textContent = summary?.distance_text || '-'
+  document.getElementById('routeDuration').textContent = summary?.duration_text || '-'
+
+  // 显示步骤
+  const stepsDiv = document.getElementById('routeSteps')
+  if (routeData.routes?.[0]?.steps) {
+    let stepsHtml = ''
+    routeData.routes[0].steps.forEach((step, i) => {
+      stepsHtml += `<div class="step-item">${i + 1}. ${step.instruction || step.road || '继续前行'} (${formatDistance(step.distance)})</div>`
+    })
+    stepsDiv.innerHTML = stepsHtml
+  }
+
+  resultDiv.classList.add('show')
+}
+
+/**
+ * 解码腾讯地图polyline（简化版）
+ */
+function decodePolyline(polyline) {
+  // 腾讯地图使用的是压缩的经纬度格式
+  // 这里返回简化处理，实际应使用完整的解码算法
+  const coords = []
+  
+  if (typeof polyline === 'string') {
+    // 尝试解析为坐标对字符串
+    const pairs = polyline.split(';')
+    pairs.forEach(pair => {
+      const parts = pair.split(',')
+      if (parts.length >= 2) {
+        coords.push({
+          lat: parseFloat(parts[0]),
+          lng: parseFloat(parts[1])
+        })
+      }
+    })
+  }
+
+  return coords
+}
+
+// ==================== 工具函数 ====================
+function selectCategory(el) {
+  document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'))
+  el.classList.add('active')
+  selectedCategory = el.dataset.category
+  searchPOI()
+}
+
+function clearMarkers() {
+  markers.forEach(m => m?.setMap(null))
+  markers = []
+}
+
+function showLoading() {
+  document.getElementById('resultsSection').innerHTML = `
+    <div class="loading">
+      <div class="loading-spinner"></div>
+      <div>正在搜索...</div>
+    </div>
+  `
+}
+
+function showEmpty(text) {
+  document.getElementById('resultsSection').innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">😿</div>
+      <div class="empty-text">${text}</div>
+    </div>
+  `
+}
+
+function showError(text) {
+  document.getElementById('resultsSection').innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">❌</div>
+      <div class="empty-text" style="color: #e74c3c;">${text}</div>
+    </div>
+  `
+}
+
+function formatDistance(meters) {
+  if (!meters) return ''
+  if (meters >= 1000) return (meters / 1000).toFixed(1) + 'km'
+  return meters + 'm'
+}
+
+// ==================== 初始化 ====================
+document.addEventListener('DOMContentLoaded', () => {
+  initMap()
+  
+  // 回车键搜索
+  document.getElementById('keywordInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') searchPOI()
+  })
+  document.getElementById('locationInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') searchPOI()
+  })
+})
+</script>
+
+</body>
+</html>

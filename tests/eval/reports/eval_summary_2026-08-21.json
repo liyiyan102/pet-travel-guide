@@ -1,0 +1,1769 @@
+{
+  "eval_version": "1.0",
+  "scheme": "评测体系方案.md v1.1 (4.4/4.5/4.6/4.7)",
+  "dataset": "v1.3_golden.json",
+  "range": "#1~#20",
+  "judge_model": "glm-4-flash",
+  "judge_prompt_version": "4.6.2",
+  "generatedAt": "2026-08-21T06:31:48.285Z",
+  "summary": {
+    "task_success_rate": 90,
+    "pet_scenario_success_rate": null,
+    "hard_error_rate": 0,
+    "clarification_accuracy": 100,
+    "avg_score": 95.3,
+    "verdict_dist": {
+      "PASS": 18,
+      "REVIEW": 1,
+      "FAIL": 1
+    },
+    "top_error_codes": [
+      [
+        "INTENT_MISS",
+        5
+      ]
+    ],
+    "avg_latency_ms": 6684,
+    "judge_stage1_discrepancies": [
+      {
+        "case_id": "PET_000001",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000002",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000003",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000004",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000005",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000006",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000007",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000008",
+        "diff": [
+          "constraint_satisfaction",
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000009",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000010",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000011",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000012",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000013",
+        "diff": [
+          "intent_understanding",
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000014",
+        "diff": [
+          "factuality",
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000015",
+        "diff": [
+          "factuality",
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000016",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000017",
+        "diff": [
+          "constraint_satisfaction",
+          "factuality"
+        ]
+      },
+      {
+        "case_id": "PET_000018",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000019",
+        "diff": [
+          "pet_scenario"
+        ]
+      },
+      {
+        "case_id": "PET_000020",
+        "diff": [
+          "constraint_satisfaction",
+          "factuality",
+          "planning_quality",
+          "tool_usage"
+        ]
+      }
+    ]
+  },
+  "results": [
+    {
+      "case_id": "PET_000001",
+      "category": "agent_interaction",
+      "subcategory": "greeting",
+      "difficulty": "L1",
+      "query": "你好",
+      "pet_status": null,
+      "expected_action": "greet_and_introduce",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 3240,
+      "response_excerpt": "你好！\n有什么关于宠物出行的问题可以帮到你的吗？\n我擅长帮你找宠物友好的场所、规划携宠行程、查询相关政策等。\n😊",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确识别了用户的寒暄意图，并进行了适当的自我介绍。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "无硬约束，此维度不适用。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "无宠物场景要求，此维度不适用。"
+          },
+          "factuality": {
+            "score": null,
+            "comment": "无事实核对清单，此维度不适用。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "无行程规划要求，此维度不适用。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "无工具调用要求，此维度不适用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复礼貌且提供了帮助信息，但略显冗长。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的回复符合预期，没有违反任何评测标准。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000002",
+      "category": "agent_interaction",
+      "subcategory": "greeting",
+      "difficulty": "L1",
+      "query": "谢谢",
+      "pet_status": null,
+      "expected_action": "acknowledge",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 1855,
+      "response_excerpt": "不用谢，小D在这里随时为您服务！\n有什么关于宠物出行的问题，尽管告诉我。\n😊",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确理解了用户的寒暄意图，没有误解用户的目标。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "本案例中没有硬约束，因此此维度不适用。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "本案例中没有涉及宠物场景，因此此维度不适用。"
+          },
+          "factuality": {
+            "score": null,
+            "comment": "本案例中没有实质事实断言，因此此维度不适用。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "本案例中没有行程规划需求，因此此维度不适用。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例中没有工具调用需求，因此此维度不适用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复礼貌且符合预期，但内容较为简单，没有提供额外的信息或引导。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合预期，没有出现任何错误或违反规则的情况。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000003",
+      "category": "agent_interaction",
+      "subcategory": "greeting",
+      "difficulty": "L1",
+      "query": "再见",
+      "pet_status": null,
+      "expected_action": "farewell",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 2404,
+      "response_excerpt": "👋 拜拜，祝您和您的宠物有一个愉快的旅程！\n有需要随时找我，再见！\n🐾",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|farewell",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确识别了用户的再见意图，并做出了相应的告别回应。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "本案例中无硬约束，因此此维度不适用。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "本案例中无宠物场景相关内容，因此此维度不适用。"
+          },
+          "factuality": {
+            "score": null,
+            "comment": "本案例中无事实核对清单，因此此维度不适用。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "本案例中无行程规划，因此此维度不适用。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例中未调用工具，因此此维度不适用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复礼貌且符合告别场景，但略显冗长，可以简化。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合预期，没有违反任何评测标准。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000004",
+      "category": "agent_interaction",
+      "subcategory": "greeting",
+      "difficulty": "L1",
+      "query": "好的",
+      "pet_status": null,
+      "expected_action": "acknowledge",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 5679,
+      "response_excerpt": "🐾 您好！\n我是小D，专注于宠物出行领域的AI助手。\n如果您需要帮助，可以告诉我以下5件事：找宠物友好的场所、查城市养宠政策、评估宠物出行风险、制作出行清单以及规划携宠行程。\n需要我帮忙吗？\n🐾",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确识别了用户的寒暄意图并进行了自我介绍，理解准确。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "无硬约束，此维度不适用。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "无宠物场景相关内容，此维度不适用。"
+          },
+          "factuality": {
+            "score": null,
+            "comment": "无事实核对清单，此维度不适用。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "无行程规划要求，此维度不适用。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "无工具调用要求，此维度不适用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复简洁明了，符合用户寒暄的期望，但未提供额外的情感或个性化内容。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "无扣分点，Agent 表现符合预期。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000005",
+      "category": "agent_interaction",
+      "subcategory": "greeting",
+      "difficulty": "L1",
+      "query": "在吗",
+      "pet_status": null,
+      "expected_action": "greet_and_introduce",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 2538,
+      "response_excerpt": "您好！\n在的，我是小D，专注于宠物出行领域的AI助手。\n有什么关于宠物出行的问题我可以帮您解答吗？\n比如找宠物友好的场所、规划携宠行程、查询相关法规等。\n😊",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确理解了用户意图，并进行了适当的自我介绍。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "无硬约束，无需评分。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "无宠物场景相关要求，无需评分。"
+          },
+          "factuality": {
+            "score": null,
+            "comment": "无事实核对清单，无需评分。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "无行程规划要求，无需评分。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "无工具调用要求，无需评分。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复简洁明了，但略显正式，可以适当增加一些亲切感。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合预期，无扣分点。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000006",
+      "category": "agent_interaction",
+      "subcategory": "identity_inquiry",
+      "difficulty": "L1",
+      "query": "你是谁",
+      "pet_status": null,
+      "expected_action": "introduce_self",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 8929,
+      "response_excerpt": "我叫小D，是专注于宠物出行领域的AI助手。\n我可以帮助您找到宠物友好的场所、规划携宠行程、查询城市养宠政策、评估宠物出行风险、生成出行物品清单、判断食物和物品的安全性、查询目的地天气以及提供宠物急救应急指引。\n如果您有关于宠物出行的问题，欢",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确理解了用户查询意图，并提供了相应的身份信息。"
+          },
+          "constraint_satisfaction": {
+            "score": 20,
+            "comment": "Agent 的回答满足了硬约束要求，即身份表述与事实一致。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "本案例不涉及宠物场景，因此此维度不适用。"
+          },
+          "factuality": {
+            "score": 15,
+            "comment": "Agent 的回答在事实核对清单中均成立。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "本案例不涉及行程规划，因此此维度不适用。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例不涉及工具调用，因此此维度不适用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回答清晰、完整，但略显冗长。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的回答符合所有评测标准，没有扣分点。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000007",
+      "category": "agent_interaction",
+      "subcategory": "identity_inquiry",
+      "difficulty": "L1",
+      "query": "你叫什么名字",
+      "pet_status": null,
+      "expected_action": "introduce_self",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 3681,
+      "response_excerpt": "我叫小D。\n很高兴为您服务，有什么关于宠物出行的问题可以问我，我可以帮您找到宠物友好的场所、规划行程、查询政策法规等。",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确理解了用户意图，并提供了适当的回答。"
+          },
+          "constraint_satisfaction": {
+            "score": 20,
+            "comment": "Agent 的回答满足了硬约束要求，没有自称猫豆。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "本案例不涉及宠物场景。"
+          },
+          "factuality": {
+            "score": 15,
+            "comment": "Agent 回答的事实与Query一致，没有错误。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "本案例不涉及行程规划。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例不涉及工具调用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回答简洁明了，但可以进一步优化以提供更完整的自我介绍。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合预期，没有扣分点。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000008",
+      "category": "agent_interaction",
+      "subcategory": "identity_inquiry",
+      "difficulty": "L2",
+      "query": "你是猫豆吗",
+      "pet_status": null,
+      "expected_action": "clarify_identity",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 7943,
+      "response_excerpt": "我叫小D，不是猫豆。\n我是一个专注于宠物出行场景的AI助手，可以帮助您找到宠物友好的场所、规划携宠行程、查询城市养宠政策等。\n有什么可以帮助您的吗？",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality",
+            "constraint_satisfaction"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确理解了用户的目标，确认了身份。"
+          },
+          "constraint_satisfaction": {
+            "score": 20,
+            "comment": "Agent 回答符合硬约束，没有自称猫豆。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "本案例不涉及宠物场景。"
+          },
+          "factuality": {
+            "score": 15,
+            "comment": "Agent 回答的事实与Query相关，没有错误。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "本案例不涉及行程规划。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例不涉及工具调用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 回复清晰，但可以更加简洁。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的回答符合所有评测标准。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality",
+        "constraint_satisfaction"
+      ],
+      "matrix_discrepancy": [
+        "constraint_satisfaction",
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000009",
+      "category": "agent_interaction",
+      "subcategory": "identity_inquiry",
+      "difficulty": "L2",
+      "query": "介绍一下你自己",
+      "pet_status": null,
+      "expected_action": "introduce_self",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 7685,
+      "response_excerpt": "你好！\n我叫小D，是一个专注宠物出行场景的AI助手。\n我能帮助你找到宠物友好的场所，规划多日携宠行程，查询城市养宠政策和交通携宠法规，评估宠物品种出行风险，生成出行物品清单，判断食物和物品的安全性，查询目的地天气，提供宠物急救应急指引，以及",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确理解了用户意图，并提供了相应的自我介绍信息。"
+          },
+          "constraint_satisfaction": {
+            "score": 20,
+            "comment": "Agent 的回答满足了硬约束要求，没有自称猫豆。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "本案例不涉及宠物场景，因此此维度不适用。"
+          },
+          "factuality": {
+            "score": 15,
+            "comment": "Agent 提供的信息与事实核对清单中的信息一致。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "本案例不涉及行程规划，因此此维度不适用。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例不涉及工具调用，因此此维度不适用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复清晰、完整，但略显冗长，可以适当精简。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合预期，没有出现扣分点。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000010",
+      "category": "agent_interaction",
+      "subcategory": "identity_inquiry",
+      "difficulty": "L1",
+      "query": "你是AI吗",
+      "pet_status": null,
+      "expected_action": "introduce_self",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 6110,
+      "response_excerpt": "你好！\n是的，我是一个专注于宠物出行领域的AI助手，小D。\n我可以帮助你找到宠物友好的场所、规划携宠行程、查询相关法规和风险评估等。\n有什么我可以帮你的吗？\n🐾",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确理解了用户的意图，并提供了适当的自我介绍。"
+          },
+          "constraint_satisfaction": {
+            "score": 20,
+            "comment": "Agent 满足了硬约束要求，没有自称猫豆。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "本案例不涉及宠物场景。"
+          },
+          "factuality": {
+            "score": 15,
+            "comment": "Agent 提供的信息与事实一致，没有违反任何事实核对清单。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "本案例不涉及行程规划。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例不涉及工具调用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复清晰、友好，但略显冗长，可以适当精简。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 表现符合预期，没有扣分点。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000011",
+      "category": "agent_interaction",
+      "subcategory": "identity_inquiry",
+      "difficulty": "L2",
+      "query": "你跟豆包什么关系",
+      "pet_status": null,
+      "expected_action": "clarify_identity",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 5565,
+      "response_excerpt": "你好！\n我是小D，专注宠物出行领域的AI助手。\n豆包是你的宠物吗？\n我可以帮助你规划它的出行行程，查找宠物友好的场所，提供相关政策和法规信息哦。\n有什么我可以帮到你的吗？\n😊",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确理解了用户意图，并提供了相应的身份信息。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "本案例不涉及硬约束，因此此维度不适用。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "本案例不涉及宠物场景，因此此维度不适用。"
+          },
+          "factuality": {
+            "score": null,
+            "comment": "本案例不涉及事实核对，因此此维度不适用。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "本案例不涉及行程规划，因此此维度不适用。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例不涉及工具调用，因此此维度不适用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复清晰、礼貌，但略显冗长，可以简化以提升效率。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合预期，没有出现错误或违反规则的情况。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000012",
+      "category": "agent_interaction",
+      "subcategory": "capability_inquiry",
+      "difficulty": "L1",
+      "query": "你能做什么",
+      "pet_status": null,
+      "expected_action": "list_capabilities",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 10426,
+      "response_excerpt": "嗨，我是小D，专注于宠物出行领域的AI助手。\n我可以帮您做以下五件事：\n搜索宠物友好的餐厅、酒店、公园、景点等场所。\n规划多日的携宠行程。\n查询城市养宠政策、交通携宠法规。\n评估宠物品种的出行风险。\n生成出行物品清单。\n\n有什么可以帮助您的",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确识别了用户意图，并提供了相应的服务介绍。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "无硬约束，此维度不适用。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "无宠物场景相关，此维度不适用。"
+          },
+          "factuality": {
+            "score": null,
+            "comment": "无事实核对清单，此维度不适用。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "无行程规划要求，此维度不适用。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "无工具调用要求，此维度不适用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复清晰、友好，但略显冗长，可以精简信息。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合预期，没有违反任何评测标准。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000013",
+      "category": "agent_interaction",
+      "subcategory": "capability_inquiry",
+      "difficulty": "L1",
+      "query": "你能看图片吗",
+      "pet_status": null,
+      "expected_action": "list_capabilities",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 5921,
+      "response_excerpt": "当然可以，我可以帮您分析图片。\n请上传图片，我会根据图片内容进行识别。",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "capability_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": null,
+            "comment": "未涉及意图理解评分，因为问题不涉及具体意图"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "未涉及约束满足评分，因为问题不涉及具体约束"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "未涉及宠物场景评分，因为问题不涉及宠物场景"
+          },
+          "factuality": {
+            "score": null,
+            "comment": "未涉及事实性评分，因为问题不涉及具体事实核对"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "未涉及行程规划质量评分，因为问题不涉及行程规划"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "未涉及工具使用评分，因为问题不涉及工具调用"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 回复了用户的问题，但未提供具体的图片分析能力说明，因此评分较低"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 回复了用户的问题，但未提供具体的图片分析能力说明，因此评分较低"
+      },
+      "applicable_dims": [
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "intent_understanding",
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000014",
+      "category": "agent_interaction",
+      "subcategory": "capability_inquiry",
+      "difficulty": "L1",
+      "query": "你能识别宠物品种吗",
+      "pet_status": null,
+      "expected_action": "list_capabilities",
+      "agent_intent": "knowledge_query",
+      "intent_match": false,
+      "latency_ms": 8866,
+      "response_excerpt": "🐾 结论：可以识别宠物品种。\n\n🐾 具体说明：\n• 我可以通过图片识别功能，分析宠物照片，从而判断宠物的品种。\n• 这需要用户上传宠物照片，我才能进行品种识别。\n\n🐾 实用建议：\n• 请上传清晰、有特征的宠物照片，以便我更准确地识别品",
+      "trace": [
+        {
+          "tool": "knowledge_search/web_search",
+          "note": "引用 2 条来源"
+        }
+      ],
+      "rule_codes": [
+        "INTENT_MISS"
+      ],
+      "judge": {
+        "stage1": {
+          "case_type": "capability_inquiry",
+          "pet_context_required": true,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality",
+            "factuality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确识别了用户查询意图，并提供了相关能力信息。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "本案例未涉及硬约束，因此此维度不适用。"
+          },
+          "pet_scenario": {
+            "score": 20,
+            "comment": "Agent 理解了宠物场景，并提供了与宠物品种识别相关的信息。"
+          },
+          "factuality": {
+            "score": 15,
+            "comment": "Agent 提供的信息真实可靠，没有虚构用户需求或声称已完成预订。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "本案例未涉及行程规划，因此此维度不适用。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例未涉及工具调用，因此此维度不适用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复清晰、具体，但略显冗长，可以适当精简。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合预期，没有出现任何违规或不确定的情况。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality",
+        "factuality"
+      ],
+      "matrix_discrepancy": [
+        "factuality",
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": [
+        "INTENT_MISS"
+      ]
+    },
+    {
+      "case_id": "PET_000015",
+      "category": "agent_interaction",
+      "subcategory": "capability_inquiry",
+      "difficulty": "L1",
+      "query": "你能查天气吗",
+      "pet_status": null,
+      "expected_action": "list_capabilities",
+      "agent_intent": "weather_check",
+      "intent_match": false,
+      "latency_ms": 6797,
+      "response_excerpt": "🌤️ 当前城市天气预报来啦～\n\n❄️ 第1天：2026-08-21 周五\n🌡️ 气温：24°C ~ 29°C\n🌤️ 天气：多云\n💧 湿度：63% | 🌬️ 风力：3级 微风\n🐾 宠物舒适度: 非常适宜 (10/10分)\n\n☀️ ",
+      "trace": [],
+      "rule_codes": [
+        "INTENT_MISS"
+      ],
+      "judge": {
+        "stage1": {
+          "case_type": "capability_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": true,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "factuality",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确识别了用户意图为查询天气，并提供了相关信息。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "本案例不涉及约束满足度。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "本案例不涉及宠物场景。"
+          },
+          "factuality": {
+            "score": 15,
+            "comment": "Agent 提供的天气预报信息是真实的，没有虚构内容。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "本案例不涉及行程规划质量。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例不涉及工具使用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复清晰，提供了详细的天气信息，但未完全符合期望动作 list_capabilities。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合预期，未出现硬性错误。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "factuality",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "factuality",
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": [
+        "INTENT_MISS"
+      ]
+    },
+    {
+      "case_id": "PET_000016",
+      "category": "agent_interaction",
+      "subcategory": "capability_inquiry",
+      "difficulty": "L1",
+      "query": "你会做攻略吗",
+      "pet_status": null,
+      "expected_action": "list_capabilities",
+      "agent_intent": "generate_itinerary",
+      "intent_match": false,
+      "latency_ms": 7385,
+      "response_excerpt": "",
+      "trace": [],
+      "rule_codes": [
+        "INTENT_MISS"
+      ],
+      "judge": {
+        "stage1": {
+          "case_type": "capability_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 10,
+            "comment": "Agent 识别意图为 generate_itinerary，但未按照用户询问的能力范围进行回答，存在意图理解偏差。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "无硬约束，无需评分。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "背景中 pet_status=无，无需考虑宠物场景。"
+          },
+          "factuality": {
+            "score": null,
+            "comment": "无事实核对清单，无需评分。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "无行程规划要求，无需评分。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "无工具调用要求，无需评分。"
+          },
+          "response_quality": {
+            "score": 5,
+            "comment": "Agent 的最终回复没有直接回答用户关于能力范围的问题，而是提供了工具调用的信息，回复质量一般。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的回答没有违反任何评测标准，但未完全满足用户的需求。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 60,
+      "verdict": "FAIL",
+      "hard_fail": null,
+      "error_codes": [
+        "INTENT_MISS"
+      ]
+    },
+    {
+      "case_id": "PET_000017",
+      "category": "agent_interaction",
+      "subcategory": "capability_inquiry",
+      "difficulty": "L1",
+      "query": "你能查政策吗",
+      "pet_status": null,
+      "expected_action": "list_capabilities",
+      "agent_intent": "policy_check",
+      "intent_match": false,
+      "latency_ms": 9527,
+      "response_excerpt": "当然可以，我可以帮助您查找相关政策信息。\n以下是一些常见的宠物出行相关政策的查询步骤：\n\n• 查找目的地的宠物入境政策\n• 了解国内宠物运输的相关规定\n• 查询宠物乘坐飞机或火车的具体要求\n• 检索宠物疫苗和健康证明的相关要求\n\n请注意，具",
+      "trace": [],
+      "rule_codes": [
+        "INTENT_MISS"
+      ],
+      "judge": {
+        "stage1": {
+          "case_type": "policy_qa",
+          "pet_context_required": true,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "constraint_satisfaction",
+            "pet_scenario",
+            "factuality",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确识别了用户的意图为政策查询"
+          },
+          "constraint_satisfaction": {
+            "score": 20,
+            "comment": "Agent 满足了对政策查询的硬约束，没有虚构用户需求或声称已完成预订"
+          },
+          "pet_scenario": {
+            "score": 20,
+            "comment": "Agent 在回答中考虑了宠物状态，并提供了与宠物出行相关的政策信息"
+          },
+          "factuality": {
+            "score": 15,
+            "comment": "Agent 提供的信息是真实的，没有虚构事实"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复清晰，但可以更加简洁"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例中未使用工具，因此此维度评分不适用"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合所有评测标准，没有扣分点"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "constraint_satisfaction",
+        "pet_scenario",
+        "factuality",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "constraint_satisfaction",
+        "factuality"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": [
+        "INTENT_MISS"
+      ]
+    },
+    {
+      "case_id": "PET_000018",
+      "category": "agent_interaction",
+      "subcategory": "capability_inquiry",
+      "difficulty": "L2",
+      "query": "你支持哪些城市",
+      "pet_status": null,
+      "expected_action": "list_capabilities",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 7620,
+      "response_excerpt": "目前我支持中国主要城市以及部分热门国际城市的宠物出行相关信息查询。\n具体包括城市养宠政策、交通携宠法规、宠物友好场所搜索等。\n如果您需要查询某个具体城市的宠物出行信息，请告诉我城市的名称，我会为您提供相应的帮助。",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|identity_inquiry|capability_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确识别了用户意图，并提供了相应的信息。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "本案例中无硬约束，因此此维度不适用。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "本案例中未涉及宠物场景，因此此维度不适用。"
+          },
+          "factuality": {
+            "score": 15,
+            "comment": "Agent 提供的信息真实可靠，没有虚构用户需求或声称已完成预订。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "本案例中无行程规划需求，因此此维度不适用。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "本案例中未调用工具，因此此维度不适用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复清晰、简洁，但未提供具体的城市列表，略逊于满分。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合预期，未出现任何扣分点。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000019",
+      "category": "agent_interaction",
+      "subcategory": "capability_inquiry",
+      "difficulty": "L2",
+      "query": "你能帮我什么",
+      "pet_status": null,
+      "expected_action": "list_capabilities",
+      "agent_intent": "chit_chat",
+      "intent_match": true,
+      "latency_ms": 10199,
+      "response_excerpt": "嗨，你好！\n我是小D，专注于宠物出行领域的AI助手。\n我可以帮你做以下五件事：\n找宠物友好的餐厅、酒店、公园、景点等场所。\n规划多日携宠行程。\n查询城市养宠政策、交通携宠法规。\n评估宠物品种出行风险。\n生成出行物品清单。\n\n有什么可以帮到你",
+      "trace": [],
+      "rule_codes": [],
+      "judge": {
+        "stage1": {
+          "case_type": "greeting|identity_inquiry",
+          "pet_context_required": false,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": false,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 15,
+            "comment": "Agent 正确识别了用户意图，并提供了相应的服务介绍。"
+          },
+          "constraint_satisfaction": {
+            "score": null,
+            "comment": "无硬约束，此维度不适用。"
+          },
+          "pet_scenario": {
+            "score": null,
+            "comment": "无宠物场景相关，此维度不适用。"
+          },
+          "factuality": {
+            "score": null,
+            "comment": "无事实核对清单，此维度不适用。"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "无行程规划要求，此维度不适用。"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "无工具调用要求，此维度不适用。"
+          },
+          "response_quality": {
+            "score": 10,
+            "comment": "Agent 的回复清晰、友好，但未完全满足用户了解能力范围的需求。"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "Agent 的表现符合预期，未出现任何违规或不确定的情况。"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "pet_scenario"
+      ],
+      "score": 100,
+      "verdict": "PASS",
+      "hard_fail": null,
+      "error_codes": []
+    },
+    {
+      "case_id": "PET_000020",
+      "category": "agent_interaction",
+      "subcategory": "general_info",
+      "difficulty": "L2",
+      "query": "北京有什么好玩的",
+      "pet_status": "unknown",
+      "expected_action": "answer_general_travel",
+      "agent_intent": "search_poi",
+      "intent_match": false,
+      "latency_ms": 11316,
+      "response_excerpt": "🐾 北京宠物友好场所推荐 🐾\n• 宠物公园：朝阳公园、奥林匹克森林公园\n• 宠物餐厅：太兴餐厅、海底捞火锅（部分门店）\n• 宠物酒店：如家酒店、汉庭酒店（部分门店）\n\n🔍 搜索建议 🔍\n• 关键词：北京宠物公园、宠物餐厅推荐、宠物友",
+      "trace": [],
+      "rule_codes": [
+        "INTENT_MISS"
+      ],
+      "judge": {
+        "stage1": {
+          "case_type": "poi_search",
+          "pet_context_required": true,
+          "planning_required": false,
+          "tool_required": false,
+          "factuality_required": true,
+          "applicable_dimensions": [
+            "intent_understanding",
+            "constraint_satisfaction",
+            "pet_scenario",
+            "factuality",
+            "planning_quality",
+            "tool_usage",
+            "response_quality"
+          ]
+        },
+        "dimensions": {
+          "intent_understanding": {
+            "score": 10,
+            "comment": "Agent 识别意图为 search_poi，但未完全理解用户目标为获得一般性游玩信息并自然引导携宠"
+          },
+          "constraint_satisfaction": {
+            "score": 15,
+            "comment": "Agent 回答内容与北京相关，未涉及虚构宠物政策，未假设用户不带宠物，满足硬约束"
+          },
+          "pet_scenario": {
+            "score": 5,
+            "comment": "Agent 回答提供了宠物友好场所信息，但未自然引导携宠，未完全满足用户目标"
+          },
+          "factuality": {
+            "score": 10,
+            "comment": "Agent 回答内容与北京相关，但未提供一般性旅行信息，而是直接推荐了宠物友好场所"
+          },
+          "planning_quality": {
+            "score": null,
+            "comment": "未要求行程规划，此维度不适用"
+          },
+          "tool_usage": {
+            "score": null,
+            "comment": "未要求调用工具，此维度不适用"
+          },
+          "response_quality": {
+            "score": 5,
+            "comment": "Agent 回复包含多个信息点，但结构不够清晰，未提供明确的期望动作"
+          }
+        },
+        "hard_fail": {
+          "triggered": false,
+          "level": null,
+          "codes": []
+        },
+        "missing_facts": [],
+        "negative_violated": [],
+        "uncertain": false,
+        "reason": "具体说明扣分点，如'Agent 未完全理解用户目标，未自然引导携宠'"
+      },
+      "applicable_dims": [
+        "intent_understanding",
+        "constraint_satisfaction",
+        "pet_scenario",
+        "factuality",
+        "planning_quality",
+        "tool_usage",
+        "response_quality"
+      ],
+      "matrix_discrepancy": [
+        "constraint_satisfaction",
+        "factuality",
+        "planning_quality",
+        "tool_usage"
+      ],
+      "score": 45,
+      "verdict": "REVIEW",
+      "hard_fail": null,
+      "error_codes": [
+        "INTENT_MISS"
+      ]
+    }
+  ]
+}
